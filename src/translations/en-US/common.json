@@ -1,0 +1,12 @@
+{
+	"appbar": {
+		"message": "Messages",
+		"notification": "Notifications",
+		"profile": "Profile",
+		"searchtext": "Search...",
+		"title": "Material Template"
+	},
+	"welcome": {
+		"title": "Welcome to {{framework}}"
+	}
+}

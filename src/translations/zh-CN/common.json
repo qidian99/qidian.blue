@@ -1,0 +1,12 @@
+{
+	"appbar": {
+		"message": "消息",
+		"notification": "通知",
+		"profile": "档案",
+		"searchtext": "搜索...",
+		"title": "Material模板"
+	},
+	"welcome": {
+		"title": "欢迎来到 {{framework}}"
+	}
+}
