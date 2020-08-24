@@ -8,7 +8,7 @@ import { MyContext } from "../../../store/context";
 import { LanguageStrings } from "../localizations";
 import { getLocalization } from "../../../utils";
 import { SET_LANGUAGE } from "../../../store/actions";
-import { initialState } from "../../../store/reducer";
+import { initialState, defaultLanguage as reducerDefaultLanguage } from "../../../store/reducer";
 
 export const LocalizedRouter = ({
   children,
@@ -27,15 +27,16 @@ export const LocalizedRouter = ({
            * Set default locale to en if base path is used without a language
            */
           const params = match ? match.params : {};
-          const { lang = defaultLanguage || initialState.language.substring(0, 2) } = params;
+          const { lang = defaultLanguage || reducerDefaultLanguage.substring(0, 2) } = params;
 
           // Get the two character localization from path and set the language in global reducer
           const locale = getLocalization(lang);
           if (store.language != locale) {
-            dispatch({
-              type: SET_LANGUAGE,
-              language: locale,
-            });
+            store.language = locale;
+            // dispatch({
+            //   type: SET_LANGUAGE,
+            //   language: locale,
+            // });
       			i18n.changeLanguage(locale);
           }
 

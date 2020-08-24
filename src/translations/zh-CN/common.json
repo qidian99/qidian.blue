@@ -1,7 +1,8 @@
 {
 	"appbar": {
-		"message": "消息",
-		"notification": "通知",
+		"language": "语言",
+		"message": "Github",
+		"notification": "领英",
 		"profile": "档案",
 		"searchtext": "搜索...",
 		"title": "Material模板"
@@ -12,16 +13,26 @@
 	},
 	"home": {
 		"content": "主页内容",
-		"title": "主页标题"
+		"title": "主页"
+	},
+	"language": {
+		"enUS": "英文",
+		"zhCN": "中文"
+	},
+	"projects": {
+		"content": "概要",
+		"title": "项目"
+	},
+	"resume": {
+		"content": "简历内容",
+		"title": "简历"
 	},
 	"routes": {
 		"home": "/",
 		"profile": "/档案",
+		"projects": "/项目",
+		"resume": "/简历",
 		"summary": "/概要"
-	},
-	"summary": {
-		"content": "概要内容",
-		"title": "概要标题"
 	},
 	"welcome": {
 		"title": "欢迎来到 {{framework}}"

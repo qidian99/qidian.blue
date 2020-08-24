@@ -1,12 +1,11 @@
-import React from 'react';
-import { Switch, RouteProps } from 'react-router';
+import React from "react";
+import { Switch, RouteProps } from "react-router";
 import { useTranslation } from "react-i18next";
-import { useContext } from 'preact/hooks'
-import { MyContext } from '../../../store/context'
+import { useContext } from "preact/hooks";
+import { MyContext } from "../../../store/context";
 
 export const LocalizedSwitch = ({ children }) => {
-
-  const [t] = useTranslation('common');
+  const [t] = useTranslation("common");
   const { store } = useContext(MyContext);
   const locale = store.language.substring(0, 2);
   /**
@@ -19,11 +18,11 @@ export const LocalizedSwitch = ({ children }) => {
    */
   return (
     <Switch>
-      {React.Children.map(children, child =>
+      {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child, {
               ...child.props,
-              path: localizeRoutePath(child.props.path)
+              path: localizeRoutePath(child.props.path),
             })
           : child
       )}
@@ -38,18 +37,16 @@ export const LocalizedSwitch = ({ children }) => {
   function localizeRoutePath(path) {
     // console.log('path', path, t(path));
     switch (typeof path) {
-      case 'undefined':
+      case "undefined":
         return undefined;
-      case 'object':
-        return path.map(key => {
-          console.log('key', key)
+      case "object":
+        return path.map((key) => {
+          console.log("key", key);
           return `/${locale}` + t(key);
         });
       default:
-        const isFallbackRoute = path === '*';
-        return isFallbackRoute
-          ? path
-          : `/${locale}` + t(path);
+        const isFallbackRoute = path === "*";
+        return isFallbackRoute ? path : `/${locale}` + t(path);
     }
   }
 };

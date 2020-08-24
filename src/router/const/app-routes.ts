@@ -1,9 +1,11 @@
 export enum AppRoute {
   Home = 'routes.home',
-  Summary = 'routes.summary'
+  Resume = 'routes.resume',
+  Projects = 'routes.projects',
 }
 
 export const AppRouteTitles = new Map([
   [AppRoute.Home, 'home.title'],
-  [AppRoute.Summary, 'summary.title']
+  [AppRoute.Resume, 'resume.title'],
+  [AppRoute.Projects, 'projects.title'],
 ]);

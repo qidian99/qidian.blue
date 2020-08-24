@@ -1,32 +1,35 @@
 import React from "react";
 import { AppLanguage } from "../../const";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 // import { useIntl } from 'react-intl';
 import { list, link } from "theme";
 import { useTranslation } from "react-i18next";
 import { useContext } from "preact/hooks";
 import { MyContext } from "../../../store/context";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { routeMap as routeMapDefault } from "..";
 const routeMap = routeMapDefault.default;
 import { getLocaleAbbrev } from "../../../utils";
 
-export const LanguageSwitcher = () => {
+export const LanguageSwitcher = ({ onClick }) => {
   const { store } = useContext(MyContext);
   const [t] = useTranslation("common");
   const locale = store.language;
   const { pathname } = useLocation();
 
   return (
-    <ul>
+    <div>
       {Object.keys(AppLanguage).map((lang) => (
-        <li key={lang}>
-          <NavLink to={getMatchingRoute(AppLanguage[lang])}>
-            {AppLanguage[lang]}
-          </NavLink>
-        </li>
+        <MenuItem
+          component={Link}
+          to={getMatchingRoute(AppLanguage[lang])}
+          onClick={onClick}
+        >
+          {t(`language.${AppLanguage[lang]}`)}
+        </MenuItem>
       ))}
-    </ul>
+    </div>
   );
 
   function getMatchingRoute(language) {
@@ -35,15 +38,6 @@ export const LanguageSwitcher = () => {
      */
     const lang = getLocaleAbbrev(locale);
     const [_, route] = pathname.split(lang);
-    // console.log(
-    //   routeMap,
-    //   locale,
-    //   routeMap[locale],
-    //   language,
-    //   routeMap[language]
-    // );
-    // console.log("getMatchingRoute", route);
-    // console.log("routeKey", routeKey, Object.keys(routeMap[locale]), route);
 
     const routeKey = Object.keys(routeMap[locale]).find(
       (key) => routeMap[locale][key] === route

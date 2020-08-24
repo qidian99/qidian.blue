@@ -32,6 +32,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "aphrodite": "^2.4.0",
+    "classnames": "^2.2.6",
     "gsap": "^3.5.0",
     "i18next": "^19.6.3",
     "json-loader": "^0.5.7",

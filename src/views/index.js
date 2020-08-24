@@ -1,3 +1,4 @@
 export * from './Home';
-export * from './Summary';
+export * from './Projects';
+export * from './Resume';
 export * from './GeneralError';

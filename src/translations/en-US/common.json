@@ -1,7 +1,8 @@
 {
 	"appbar": {
-		"message": "Messages",
-		"notification": "Notifications",
+		"language": "Language",
+		"message": "Github",
+		"notification": "LinkedIn",
 		"profile": "Profile",
 		"searchtext": "Search...",
 		"title": "Material Template"
@@ -12,16 +13,26 @@
 	},
 	"home": {
 		"content": "Home Content",
-		"title": "Home Title"
+		"title": "Home"
+	},
+	"language": {
+		"enUS": "English",
+		"zhCN": "Chinese"
+	},
+	"projects": {
+		"content": "Summary",
+		"title": "Projects"
+	},
+	"resume": {
+		"content": "Resume Content",
+		"title": "Resume"
 	},
 	"routes": {
 		"home": "/",
 		"profile": "/profile",
+		"projects": "/projects",
+		"resume": "/resume",
 		"summary": "/summary"
-	},
-	"summary": {
-		"content": "Summary Content",
-		"title": "Summary Title"
 	},
 	"welcome": {
 		"title": "Welcome to {{framework}}"

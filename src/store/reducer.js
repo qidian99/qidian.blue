@@ -36,3 +36,5 @@ export const initialState = {
   age: null,
   language: 'zhCN',
 };
+
+export const defaultLanguage = 'zhCN'
