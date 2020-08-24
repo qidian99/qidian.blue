@@ -1,19 +1,20 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-
 import { I18nextProvider } from 'react-i18next';
-
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { zhCN } from '@material-ui/core/locale';
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
+import Scroller from '../components/Scroller';
 
 const theme = createMuiTheme({
 	palette: {
-		// primary: { main: '#1976d2' },
+		primary: { main: '#2B2741' },
+		secondary: {
+			main: '#8FEBD5',
+		},
 	},
 }, zhCN);
-
 
 
 import { HeaderComponent } from '../components/LanguageSwitch'
@@ -38,8 +39,8 @@ i18next.init({
 
 
 // import Header from './header';
-// import Home from '../routes/home';
-// import Profile from '../routes/profile';
+import Home from '../routes/home';
+import Profile from '../routes/profile';
 import NotFound from '../routes/404';
 // import Home from 'async!../routes/home';
 // import Profile from 'async!../routes/profile';
@@ -63,11 +64,12 @@ export default class App extends Component {
 						<AppBar />
 						<HeaderComponent />
 						{/* <Router onChange={this.handleRoute}>
-						<Home path="/" />
-						<Profile path="/profile/" user="me" />
-						<Profile path="/profile/:user" />
-						<NotFound default />
-					</Router> */}
+							<Home path="/" />
+							<Profile path="/profile/" user="me" />
+							<Profile path="/profile/:user" />
+							<NotFound default />
+						</Router> */}
+						<Scroller />
 					</I18nextProvider>
 				</ThemeProvider>
 			</div>
