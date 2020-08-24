@@ -6,6 +6,23 @@
 		"searchtext": "搜索...",
 		"title": "Material模板"
 	},
+	"error": {
+		"content": "错误页内容",
+		"title": "错误页标题"
+	},
+	"home": {
+		"content": "主页内容",
+		"title": "主页标题"
+	},
+	"routes": {
+		"home": "/",
+		"profile": "/档案",
+		"summary": "/概要"
+	},
+	"summary": {
+		"content": "概要内容",
+		"title": "概要标题"
+	},
 	"welcome": {
 		"title": "欢迎来到 {{framework}}"
 	}

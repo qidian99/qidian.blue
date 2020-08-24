@@ -34,6 +34,7 @@
     "aphrodite": "^2.4.0",
     "gsap": "^3.5.0",
     "i18next": "^19.6.3",
+    "json-loader": "^0.5.7",
     "preact": "^10.4.7",
     "preact-compat": "^3.17.0",
     "preact-custom-element": "^3.0.0",

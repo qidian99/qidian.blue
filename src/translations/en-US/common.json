@@ -6,6 +6,23 @@
 		"searchtext": "Search...",
 		"title": "Material Template"
 	},
+	"error": {
+		"content": "Error Content",
+		"title": "Error Title"
+	},
+	"home": {
+		"content": "Home Content",
+		"title": "Home Title"
+	},
+	"routes": {
+		"home": "/",
+		"profile": "/profile",
+		"summary": "/summary"
+	},
+	"summary": {
+		"content": "Summary Content",
+		"title": "Summary Title"
+	},
 	"welcome": {
 		"title": "Welcome to {{framework}}"
 	}

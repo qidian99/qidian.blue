@@ -1,5 +1,4 @@
-import * as localizations from './localizations';
-export const appStrings = localizations;
+export * as routeMap from './localizations';
 
 export * from './components/LocalizedRouter';
 export * from './components/LocalizedSwitch';

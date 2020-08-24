@@ -1,9 +1,9 @@
 import React from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
-import { wrapper, Color } from 'theme';
-import { Navigation } from 'modules/navigation';
-import { LanguageSwitcher } from 'modules/i18n';
-import { padding } from 'theme/padding';
+import { wrapper, Color } from "../../theme";
+import { Navigation } from "../../navigation";
+import { LanguageSwitcher } from "../../i18n";
+import { padding } from "../../theme/padding";
 
 export const AppLayout: React.FC = ({ children }) => (
   <div className={css(styles.container)}>

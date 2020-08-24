@@ -1,12 +1,17 @@
 import React from 'react';
 import { Switch, RouteProps } from 'react-router';
-import { useIntl } from 'react-intl';
+import { useTranslation } from "react-i18next";
+import { useContext } from 'preact/hooks'
+import { MyContext } from '../../../store/context'
 
-export const LocalizedSwitch: React.FC = ({ children }) => {
+export const LocalizedSwitch = ({ children }) => {
+
+  const [t] = useTranslation('common');
+  const { store } = useContext(MyContext);
+  const locale = store.language.substring(0, 2);
   /**
    * inject params and formatMessage through hooks, so we can localize the route
    */
-  const { formatMessage, locale } = useIntl();
 
   /**
    * Apply localization to all routes
@@ -15,7 +20,7 @@ export const LocalizedSwitch: React.FC = ({ children }) => {
   return (
     <Switch>
       {React.Children.map(children, child =>
-        React.isValidElement<RouteProps>(child)
+        React.isValidElement(child)
           ? React.cloneElement(child, {
               ...child.props,
               path: localizeRoutePath(child.props.path)
@@ -30,17 +35,21 @@ export const LocalizedSwitch: React.FC = ({ children }) => {
    * @param path can be string, undefined or string array
    * @returns Localized string path or path array
    */
-  function localizeRoutePath(path?: string | string[]) {
+  function localizeRoutePath(path) {
+    // console.log('path', path, t(path));
     switch (typeof path) {
       case 'undefined':
         return undefined;
       case 'object':
-        return path.map(key => `/${locale}` + formatMessage({ id: key }));
+        return path.map(key => {
+          console.log('key', key)
+          return `/${locale}` + t(key);
+        });
       default:
         const isFallbackRoute = path === '*';
         return isFallbackRoute
           ? path
-          : `/${locale}` + formatMessage({ id: path });
+          : `/${locale}` + t(path);
     }
   }
 };
