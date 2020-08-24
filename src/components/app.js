@@ -2,8 +2,13 @@ import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { I18nextProvider } from 'react-i18next';
 import { zhCN } from '@material-ui/core/locale';
+import { BrowserRouter, Route } from 'react-router-dom';
+import * as views from 'views';
 
+import { AppLayout } from 'modules/layout';
+import { LocalizedRouter, LocalizedSwitch, appStrings } from 'modules/i18n';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { AppRoute, AppLanguage } from 'const';
 
 import Scroller from '../components/Scroller';
 
@@ -69,7 +74,25 @@ export default class App extends Component {
 							<Profile path="/profile/:user" />
 							<NotFound default />
 						</Router> */}
-						<Scroller />
+						<LocalizedRouter
+							RouterComponent={BrowserRouter}
+							languages={AppLanguage}
+							appStrings={appStrings}
+						>
+							<AppLayout>
+								<LocalizedSwitch>
+									<Route exact path={AppRoute.Home}>
+										<views.Home />
+									</Route>
+									<Route exact path={AppRoute.Summary}>
+										<views.Summary />
+									</Route>
+									<Route path="*">
+										<views.GeneralError />
+									</Route>
+								</LocalizedSwitch>
+							</AppLayout>
+						</LocalizedRouter>
 					</I18nextProvider>
 				</ThemeProvider>
 			</div>
