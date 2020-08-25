@@ -1,10 +1,15 @@
 {
 	"appbar": {
-		"language": "语言",
-		"message": "Github",
-		"notification": "领英",
+		"icon_github": "Github",
+		"icon_language": "语言",
+		"icon_linkedin": "领英",
+		"icon_theme": "切换主题",
 		"profile": "档案",
 		"searchtext": "搜索...",
+		"tip_github": "Github主页",
+		"tip_language": "语言设置",
+		"tip_linkedin": "领英主页",
+		"tip_theme": "切换明暗主题",
 		"title": "Material模板"
 	},
 	"error": {
@@ -13,6 +18,9 @@
 	},
 	"home": {
 		"content": "主页内容",
+		"intro_cs": "我有着丰富的全栈开发经历，熟悉前端所有主流框架，绝大多数事件驱动，面向对象，MVC的后端实现。",
+		"intro_general": "目前在加州大学圣地亚哥分校攻读计算机和应用数学双学位。",
+		"prompt": "你好，我是齐典，",
 		"title": "主页"
 	},
 	"language": {

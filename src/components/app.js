@@ -1,5 +1,5 @@
 import { h, Component, createContext } from 'preact';
-import { useReducer } from 'preact/hooks'
+import { useReducer, useState, useEffect } from 'preact/hooks'
 import { Router } from 'preact-router';
 import { I18nextProvider } from 'react-i18next';
 import { zhCN } from '@material-ui/core/locale';
@@ -8,6 +8,7 @@ import * as views from '../views';
 import * as locales from '@material-ui/core/locale';
 import TablePagination from '@material-ui/core/TablePagination';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { CSSTransition } from 'react-transition-group'
 
 import { AppLayout } from '../router/layout';
 import { LocalizedRouter, LocalizedSwitch, appStrings, LanguageSwitcher } from '../router/i18n';
@@ -15,19 +16,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { AppRoute, AppLanguage } from '../router/const';
 
 import Scroller from '../components/Scroller';
-import UserList, { AddGenderToUser } from '../components/UserList'
 import { initialState, reducer, defaultLanguage } from '../store/reducer'
 import { MyContext } from '../store/context'
 import '../router/i18n/localizations'
-
-const theme = createMuiTheme({
-	palette: {
-		primary: { main: '#2B2741' },
-		secondary: {
-			main: '#8FEBD5',
-		},
-	},
-});
 
 import i18next from 'i18next';
 import common_enUS from '../translations/en-US/common.json';
@@ -47,45 +38,72 @@ i18next.init({
 	}
 });
 
-export default class App extends Component {
+const DARK_THEME = {
+	palette: {
+		primary: { main: '#2B2741' },
+		secondary: {
+			main: '#8FEBD5',
+		},
+		type: 'dark',
+	},
+};
 
-	render() {
 
-		const [store, dispatch] = useReducer(reducer, initialState);
-		console.log(store.language)
+const LIGHT_THEME = {
+	palette: {
+		type: 'light',
+	},
+};
+const App = () => {
 
-		// console.log(store.language, locales[store.language])
+	const [store, dispatch] = useReducer(reducer, initialState);
 
-		return (
-			<div id="app">
-				<MyContext.Provider value={{ store, dispatch }}>
-					<ThemeProvider theme={createMuiTheme(theme, locales[store.language])}>
-						<I18nextProvider i18n={i18next}>
-							<LocalizedRouter
-								RouterComponent={BrowserRouter}
-								languages={AppLanguage}
-							>
-								<AppLayout>
-									<LocalizedSwitch>
-										<Route exact path={AppRoute.Home}>
-											<views.Home />
-										</Route>
-										<Route exact path={AppRoute.Projects}>
-											<views.Projects />
-										</Route>
-										<Route exact path={AppRoute.Resume}>
-											<views.Resume />
-										</Route>
-										<Route path="*">
-											<views.GeneralError />
-										</Route>
-									</LocalizedSwitch>
-								</AppLayout>
-							</LocalizedRouter>
-						</I18nextProvider>
-					</ThemeProvider>
-				</MyContext.Provider>
-			</div>
-		);
-	}
+	// const [theme, setTheme] = useState(createMuiTheme(DARK_THEME));
+
+	// console.log(store.theme, store.language)
+	// useEffect(() => {
+	// 	setTheme({
+	// 		...DARK_THEME,
+	// 		palette: {
+	// 			...DARK_THEME.palette,
+	// 			type: store.theme
+	// 		}
+	// 	})
+	// }, [store.theme])
+
+	// console.log(store.language, locales[store.language])
+
+	return (
+		<div id="app">
+			<MyContext.Provider value={{ store, dispatch }}>
+				<ThemeProvider theme={createMuiTheme(store.theme === 'dark' ? DARK_THEME : LIGHT_THEME, locales[store.language])}>
+					<I18nextProvider i18n={i18next}>
+						<LocalizedRouter
+							RouterComponent={BrowserRouter}
+							languages={AppLanguage}
+						>
+							<AppLayout>
+								<LocalizedSwitch>
+									<Route exact path={AppRoute.Home}>
+										<views.Home />
+									</Route>
+									<Route exact path={AppRoute.Projects}>
+										<views.Projects />
+									</Route>
+									<Route exact path={AppRoute.Resume}>
+										<views.Resume />
+									</Route>
+									<Route path="*">
+										<views.GeneralError />
+									</Route>
+								</LocalizedSwitch>
+							</AppLayout>
+						</LocalizedRouter>
+					</I18nextProvider>
+				</ThemeProvider>
+			</MyContext.Provider>
+		</div>
+	);
 }
+
+export default App;

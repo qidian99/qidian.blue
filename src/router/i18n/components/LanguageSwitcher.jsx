@@ -2,7 +2,6 @@ import React from "react";
 import { AppLanguage } from "../../const";
 import { NavLink, useLocation, Link } from "react-router-dom";
 // import { useIntl } from 'react-intl';
-import { list, link } from "theme";
 import { useTranslation } from "react-i18next";
 import { useContext } from "preact/hooks";
 import { MyContext } from "../../../store/context";

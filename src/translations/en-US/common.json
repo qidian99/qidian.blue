@@ -1,10 +1,15 @@
 {
 	"appbar": {
-		"language": "Language",
-		"message": "Github",
-		"notification": "LinkedIn",
+		"icon_github": "Github",
+		"icon_language": "Language",
+		"icon_linkedin": "LinkedIn",
+		"icon_theme": "Toggle theme",
 		"profile": "Profile",
 		"searchtext": "Search...",
+		"tip_github": "Github Repository",
+		"tip_language": "Language Settings",
+		"tip_linkedin": "LinkedIn Homepage",
+		"tip_theme": "Toggle Dark/Light Theme",
 		"title": "Material Template"
 	},
 	"error": {
@@ -13,6 +18,9 @@
 	},
 	"home": {
 		"content": "Home Content",
+		"intro_cs": "I have a wealth of full-stack development experience, and I am familiar with all major front-end frameworks, most event-driven, object-oriented, and MVC back-end implementations.",
+		"intro_general": "an uprising forth year student pursuing a dual degree in computer science and applied mathematics at the University of California, San Diego.",
+		"prompt": "Hi! I am Dian,",
 		"title": "Home"
 	},
 	"language": {

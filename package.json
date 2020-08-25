@@ -37,7 +37,6 @@
     "i18next": "^19.6.3",
     "json-loader": "^0.5.7",
     "preact": "^10.4.7",
-    "preact-compat": "^3.17.0",
     "preact-custom-element": "^3.0.0",
     "preact-material-components": "^1.4.3",
     "preact-render-to-string": "^5.1.4",
@@ -49,6 +48,7 @@
     "react-intl": "^5.7.0",
     "react-router-dom": "^5.2.0",
     "react-scrollmagic": "^2.2.0",
+    "react-transition-group": "^4.4.1",
     "styled-components": "^5.1.1"
   }
 }

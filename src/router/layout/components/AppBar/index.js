@@ -1,9 +1,10 @@
 import React from 'react';
-import { useCallback } from 'preact/hooks';
+import { useCallback, useContext } from 'preact/hooks';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import { Link } from 'react-router-dom'
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
@@ -18,6 +19,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import LightThemeIcon from '@material-ui/icons/Brightness7';
+import DarkThemeIcon from '@material-ui/icons/Brightness4';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -32,10 +35,13 @@ import { Navigation, NavigationDrawer } from "../../../navigation";
 
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '../../../i18n';
+import { MyContext } from '../../../../store/context';
+import { SET_THEME } from '../../../../store/actions';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+    position: 'relative',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -116,9 +122,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LocalizedSearchBar() {
   const [t, i18n] = useTranslation('common');
-  const [state, setState] = React.useState({
-    left: false,
-  });
+  const { store: { theme }, dispatch } = useContext(MyContext)
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -128,22 +132,29 @@ export default function LocalizedSearchBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleLanguageMenuOpen = (event) => {
+  const handleToggleTheme = useCallback(theme => () => {
+    dispatch({
+      type: SET_THEME,
+      theme,
+    })
+  }, []);
+
+  const handleLanguageMenuOpen = useCallback((event) => {
     setAnchorEl(event.currentTarget);
-  };
+  }, []);
 
-  const handleMobileMenuClose = () => {
+  const handleMobileMenuClose = useCallback(() => {
     setMobileMoreAnchorEl(null);
-  };
+  }, []);
 
-  const handleMenuClose = () => {
+  const handleMenuClose = useCallback(() => {
     setAnchorEl(null);
     handleMobileMenuClose();
-  };
+  }, []);
 
-  const handleMobileMenuOpen = (event) => {
+  const handleMobileMenuOpen = useCallback((event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-  };
+  }, []);
 
 
   const goToGithub = useCallback(
@@ -196,7 +207,7 @@ export default function LocalizedSearchBar() {
             <GitHubIcon />
           </Badge>
         </IconButton>
-        <p>{t('appbar.message')}</p>
+        <p>{t('appbar.icon_github')}</p>
       </MenuItem>
       <MenuItem onClick={goToLinkedIn} >
         <IconButton color="inherit">
@@ -204,7 +215,15 @@ export default function LocalizedSearchBar() {
             <LinkedInIcon />
           </Badge>
         </IconButton>
-        <p>{t('appbar.notification')}</p>
+        <p>{t('appbar.icon_linkedin')}</p>
+      </MenuItem>
+      <MenuItem onClick={handleToggleTheme(theme === 'light' ? 'dark' : 'light')} >
+        <IconButton color="inherit">
+          {
+            theme === 'light' ? <LightThemeIcon /> : <DarkThemeIcon />
+          }
+        </IconButton>
+        <p>{t('appbar.icon_theme')}</p>
       </MenuItem>
       <MenuItem onClick={handleLanguageMenuOpen}>
         <IconButton
@@ -215,7 +234,7 @@ export default function LocalizedSearchBar() {
         >
           <LanguageIcon />
         </IconButton>
-        <p>{t('appbar.language')}</p>
+        <p>{t('appbar.icon_language')}</p>
       </MenuItem>
     </Menu>
   );
@@ -248,7 +267,7 @@ export default function LocalizedSearchBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <React.Fragment>
             <IconButton
@@ -282,31 +301,43 @@ export default function LocalizedSearchBar() {
             />
           </div>
           <div className={classes.sectionDesktop}>
-            <IconButton
-              onClick={goToGithub}
-              aria-label="show 10 new commits"
-              color="inherit">
-              <Badge badgeContent={10} color="secondary">
-                <GitHubIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              onClick={goToLinkedIn}
-              color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <LinkedInIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleLanguageMenuOpen}
-              color="inherit"
-            >
-              <LanguageIcon />
-            </IconButton>
+            <Tooltip title={t('appbar.tip_github')} aria-label="github">
+              <IconButton
+                onClick={goToGithub}
+                aria-label="show 10 new commits"
+                color="inherit">
+                <Badge badgeContent={10} color="secondary">
+                  <GitHubIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t('appbar.tip_linkedin')} aria-label="linkedin">
+              <IconButton
+                onClick={goToLinkedIn}
+                color="inherit">
+                <Badge badgeContent={0} color="secondary">
+                  <LinkedInIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t('appbar.tip_theme')} aria-label="theme">
+              <IconButton color="inherit" onClick={handleToggleTheme(theme === 'light' ? 'dark' : 'light')}>
+                {
+                  theme === 'light' ? <LightThemeIcon /> : <DarkThemeIcon />
+                }
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t('appbar.tip_language')} aria-label="linkedin">
+              <IconButton
+                edge="end"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleLanguageMenuOpen}
+                color="inherit"
+              >
+                <LanguageIcon />
+              </IconButton>
+            </Tooltip>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

@@ -1,25 +1,13 @@
-import { UPDATE_USER, SET_AGE, SET_GENDER, SET_LANGUAGE } from './actions';
+import { SET_THEME, SET_LANGUAGE } from './actions';
 
 export function reducer(state, action) {
   switch (action.type) {
-    case UPDATE_USER:
+    case SET_THEME: {
       return {
-        username: action.username,
-        gender: null,
-        age: null
+        ...state,
+        theme: action.theme,
       };
-    case SET_GENDER:
-      return {
-        username: state.username,
-        gender: action.gender,
-        age: null
-      };
-    case SET_AGE:
-      return {
-        username: state.username,
-        gender: state.gender,
-        age: action.age
-      };
+    }
     case SET_LANGUAGE:
       return {
         ...state,
@@ -30,11 +18,11 @@ export function reducer(state, action) {
   }
 }
 
+export const defaultLanguage = 'zhCN'
+export const defaultTheme = 'dark'
+
 export const initialState = {
-  username: null,
-  gender: null,
-  age: null,
-  language: 'zhCN',
+  language: defaultLanguage,
+  theme: defaultTheme,
 };
 
-export const defaultLanguage = 'zhCN'
