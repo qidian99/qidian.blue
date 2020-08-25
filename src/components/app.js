@@ -74,7 +74,7 @@ const App = () => {
 	// console.log(store.language, locales[store.language])
 
 	return (
-		<div id="app">
+		<div>
 			<MyContext.Provider value={{ store, dispatch }}>
 				<ThemeProvider theme={createMuiTheme(store.theme === 'dark' ? DARK_THEME : LIGHT_THEME, locales[store.language])}>
 					<I18nextProvider i18n={i18next}>

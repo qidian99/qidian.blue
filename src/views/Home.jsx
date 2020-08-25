@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export const Home = withRouter((props) => {
+export const Home = (props) => {
   const [t, i18n] = useTranslation("common");
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -263,4 +263,4 @@ export const Home = withRouter((props) => {
   );
 
   return <RevealComponent />;
-});
+};
