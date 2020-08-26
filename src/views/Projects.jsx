@@ -1,18 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useCallback, useContext } from "preact/hooks";
 import $ from "jquery";
-// import { gsap, TimelineLite, TimelineMax } from "gsap";
-import { gsap, Timeline } from "gsap"; // Also works with TweenLite and TimelineLite: import { TweenMax, TimelineMax } from "gsap";
-
-// import * as ScrollMagic from "ScrollMagic";
+import { gsap } from "gsap";
 import ScrollMagic from "ScrollMagic";
-// import "imports-loader?define=>false!animation.gsap";
 import "animation.gsap";
 import "debug.addIndicators";
-
-// import "script-loader!animation.gsap.js";
-// import { ScrollMagicPluginGsap } from "scrollmagic-plugin-gsap";
-// ScrollMagicPluginGsap(ScrollMagic, TweenMax, TimelineMax);
 
 import "./css/project.css";
 import { Tween } from "gsap/gsap-core";
@@ -46,7 +38,7 @@ export const Projects = () => {
     // console.log($('#stage').each(function (i) { console.log($(this)) }))
     const scene = new ScrollMagic.Scene({
       triggerElement: "#stage",
-      duration: "50%",
+      duration: "30%",
       triggerHook: 0.25,
     })
       // .on("enter", function (e) {
