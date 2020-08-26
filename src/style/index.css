@@ -6,7 +6,7 @@ html, body {
 	background: #FAFAFA;
 	font-family: 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
-	/* color: #444; */
+	color: #444;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -35,17 +35,13 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-* {
-	box-sizing: border-box;
-}
-
 #app {
-	height: 100%;
+  height: 100%;
 }
 
 .mdc-theme--dark {
-	background-color: #333;
-	color: #fff;
+  background-color: #333;
+  color: #fff;
 }
 
 .mdc-theme--dark .mdc-card {

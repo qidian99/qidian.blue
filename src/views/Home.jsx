@@ -1,8 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { useRef, useState, useEffect } from "preact/hooks";
-;
+import {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "preact/hooks";
+import { Controller, Scene } from "react-scrollmagic";
 import { TimelineMax, Power1, gsap } from "gsap";
-import { withRouter } from "react-router-dom";
+import { Tween, Timeline, Reveal } from "react-gsap";
+
 import {
   makeStyles,
   Typography,
@@ -14,7 +21,6 @@ import {
 import classNames from "classnames";
 import React, { forwardRef } from "react";
 import styled from "styled-components";
-import { Tween, Timeline, Reveal } from "react-gsap";
 
 import {
   FadeIn,
@@ -23,9 +29,11 @@ import {
   FadeInLeftWords,
   RubberBand,
   CutText,
+  FadeInWithDelay,
 } from "../utils";
 
 import GeiselImage from "../assets/geisel.jpg";
+import { MyContext } from "../store/context";
 
 const Wrapper = forwardRef((props, ref) => (
   <div ref={ref}>{props.children}</div>
@@ -51,7 +59,6 @@ const RevealStyled = styled.div`
     padding: 60px 0;
   }
 `;
-
 
 const RevealComponent = () => (
   <RevealStyled>
@@ -105,10 +112,12 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: theme.palette.background.paper,
       height: "100vh",
       width: "100vw",
-      position: "absolute",
+      // position: "absolute",
       textAlign: "center",
+      overflow: "hidden",
     },
     generalIntro: {
+      position: "fixed",
       "&::before": {
         content: "''",
         backgroundSize: "cover",
@@ -123,10 +132,14 @@ const useStyles = makeStyles((theme) => {
     },
     csIntro: {
       backgroundColor: theme.palette.primary.light,
-      position: "relative",
       height: "100vh",
       width: "100vw",
       position: "absolute",
+      // top: 0,
+      // right: 0,
+      // bottom: 0,
+      // left: 0,
+      overflow: "hidden",
       textAlign: "center",
     },
     content: {
@@ -148,6 +161,26 @@ const useStyles = makeStyles((theme) => {
       maxWidth: "100%",
       maxHeight: "100%",
     },
+    splitText: {
+      fontWeight: theme.typography.fontWeightBold,
+    },
+    pinContainer: {
+      height: "100vh",
+      width: "100vw",
+      overflow: "hidden",
+    },
+    panel: {
+      height: "100vh",
+      width: "100vw",
+      position: "absolute",
+      textAlign: "center",
+    },
+    lightBG: {
+      backgroundColor: theme.palette.primary.light,
+    },
+    darkBG: {
+      backgroundColor: theme.palette.primary.dark,
+    },
   };
 });
 
@@ -161,8 +194,13 @@ export const Home = (props) => {
   const [timeline] = useState(new TimelineMax({ paused: true }));
 
   const classes = useStyles();
+  // const [, updateState] = useState();
+  // const forceUpdate = useCallback(() => updateState({}), []);
 
+  const { store } = useContext(MyContext);
+  console.log(store.theme, store.language);
   useEffect(() => {
+    // forceUpdate();
     // timeline
     //   .from(headerRef.current, 0.5, {
     //     display: "none",
@@ -189,13 +227,13 @@ export const Home = (props) => {
     //     props.history.push("/en/resume");
     //   }, timelineDuration);
     // }, 5000);
-  }, []);
+  }, [store.language, store.theme]);
 
   const Container = ({ className, children }) => (
     <div className={classNames(classes.container, className)}>
       <Box className={classes.offset} />
       <Box
-        // p={6}
+        p={6}
         // ref={sectionRef}
         display="flex"
         alignItems="center"
@@ -211,56 +249,88 @@ export const Home = (props) => {
 
   const GeneralIntro = () => (
     <Container className={classes.generalIntro}>
-      <Timeline duration={2}>
-        <FadeIn position="+=1">
-          <Box position="relative" ref={headerRef}>
-            <Typography variant="h2" color="textPrimary" gutterBottom>
+      <Box position="relative" ref={headerRef}>
+        <Typography
+          className={classes.splitText}
+          variant="h2"
+          color="textPrimary"
+          gutterBottom
+        >
+          <Reveal trigger={<div />}>
+            <FadeInLeftChars
+              wrapper={<span style={{ display: "inline-block" }} />}
+            >
               {t("home.prompt")}
-            </Typography>
-          </Box>
-        </FadeIn>
-
-        <FadeIn position="+=1">
+            </FadeInLeftChars>
+          </Reveal>
+        </Typography>
+      </Box>
+      <Reveal trigger={<div />}>
+        <FadeInWithDelay delay={1.2}>
           <Box position="relative" className={classes.content} ref={contentRef}>
             <Typography variant="h3" color="textPrimary" align="center">
               {t("home.intro_general")}
             </Typography>
           </Box>
-        </FadeIn>
-      </Timeline>
+        </FadeInWithDelay>
+      </Reveal>
     </Container>
   );
 
   const CSIntro = (
     <div className={classes.csIntro}>
-      <Container>
-        <Paper className={classes.paper}>
-          <Grid container spacing={2}>
-            <Grid item>
-              <ButtonBase className={classes.image}></ButtonBase>
-            </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <Typography color="textPrimary">
-                    {t("home.intro_cs")}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2" style={{ cursor: "pointer" }}>
-                    Remove
-                  </Typography>
-                </Grid>
+      <Paper className={classes.paper}>
+        <Box className={classes.offset}></Box>
+        <Grid container spacing={2}>
+          <Grid item>
+            <ButtonBase className={classes.image}></ButtonBase>
+          </Grid>
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography color="textPrimary">
+                  {t("home.intro_cs")}
+                </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1">$19.00</Typography>
+                <Typography variant="body2" style={{ cursor: "pointer" }}>
+                  Remove
+                </Typography>
               </Grid>
             </Grid>
+            <Grid item>
+              <Typography variant="subtitle1">$19.00</Typography>
+            </Grid>
           </Grid>
-        </Paper>
-      </Container>
+        </Grid>
+      </Paper>
     </div>
   );
 
-  return <RevealComponent />;
+  return (
+    <Box>
+      <GeneralIntro />
+      <Controller>
+        <Scene triggerHook="onLeave" duration="300%" pin>
+          <Timeline wrapper={<div className={classes.pinContainer} />}>
+            <Tween from={{ x: "-100%", delay: "100%" }} to={{ x: "0%" }}>
+              <section className={classNames(classes.panel, classes.lightBG)}>
+                <span>Panel</span>
+              </section>
+            </Tween>
+            <Tween from={{ x: "100%", delay: "100%" }} to={{ x: "0%" }}>
+              <section className={classNames(classes.panel, classes.darkBG)}>
+                <span>Panel</span>
+              </section>
+            </Tween>
+            <Tween from={{ y: "-100%", delay: "100%" }} to={{ y: "0%" }}>
+              <section className={classNames(classes.panel, classes.lightBG)}>
+                <span>Panel</span>
+              </section>
+            </Tween>
+          </Timeline>
+        </Scene>
+      </Controller>
+    </Box>
+  );
 };

@@ -16,6 +16,19 @@ export const FadeIn = ({
   </Tween>
 );
 
+export const FadeInWithDelay = ({
+  children,
+  delay,
+  ...rest
+}: {
+  children: React.ReactNode;
+  [key: string]: any;
+}) => (
+  <Tween from={{ opacity: 0, delay }} {...rest}>
+    {children}
+  </Tween>
+);
+
 export const FadeInLeft = ({
   children,
   ...rest
