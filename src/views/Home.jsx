@@ -6,12 +6,20 @@ import {
   useContext,
   useCallback,
 } from "preact/hooks";
-import { Tween, Timeline, Reveal } from "react-gsap";
+import { createContext, Fragment } from "preact";
+import {
+  SplitChars,
+  Tween,
+  Timeline,
+  Reveal,
+  PlayState,
+  GsapControls,
+  Controls,
+} from "react-gsap";
+
+// import Controls from '../components/gsap/Controls';
 import { gsap, TimelineMax, TweenMax, Linear } from "gsap";
 import ScrollMagic from "ScrollMagic";
-import "animation.gsap";
-import "debug.addIndicators";
-import $ from 'jquery';
 import {
   makeStyles,
   Typography,
@@ -22,7 +30,7 @@ import {
 } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
-import SplitText from '../../modules/SplitText.min'
+import SplitText from "../../modules/SplitText.min";
 import {
   FadeIn,
   FadeInLeft,
@@ -31,10 +39,34 @@ import {
   RubberBand,
   CutText,
   FadeInWithDelay,
+  getBackgroundPosition,
+  TweenGridIcon,
 } from "../utils";
 
-import GeiselImage from "../assets/geisel.jpg";
 import { MyContext } from "../store/context";
+
+import GeiselImage from "../assets/geisel.jpg";
+import GithubIcon from "../assets/github.png";
+import LinuxIcon from "../assets/linux.png";
+import SwiftIcon from "../assets/swift.png";
+import WebpackIcon from "../assets/webpack.png";
+import YarnIcon from "../assets/yarn.png";
+import TSIcon from "../assets/typescript.png";
+import ReactIcon from "../assets/react.png";
+const ICONS = [
+  ReactIcon,
+  GithubIcon,
+  LinuxIcon,
+  SwiftIcon,
+  WebpackIcon,
+  YarnIcon,
+  TSIcon,
+];
+
+const AnimationContext = createContext(null);
+
+export const FADEOUT_TRIGGER = 0.5;
+export const FADEOUT_THRESHOLD = (1 + FADEOUT_TRIGGER) / 2; // from threshold to 1, home animation progress from 1 to 0
 
 const useStyles = makeStyles((theme) => {
   // console.log(theme);
@@ -80,7 +112,6 @@ const useStyles = makeStyles((theme) => {
     splitText: {
       fontWeight: theme.typography.fontWeightBold,
     },
-
     /***
      * Content Specific
      */
@@ -105,12 +136,86 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+const HiTween = () => {
+  const [playing, setPlaying] = React.useState(false);
+  const [progress, setProgress] = React.useState(0);
+  const [t, i18n] = useTranslation("common");
+
+  return (
+    <AnimationContext.Consumer>
+      {({ animPlayState }) => (
+        <Fragment>
+          <Reveal trigger={<div />}>
+            <GsapControls
+              playState={
+                animPlayState === "play" ? PlayState.play : PlayState.reverse
+              }
+            >
+              <Tween
+                from={{ opacity: 0, x: "-100vw" }}
+                ease="power1.inOut"
+                stagger={0.1}
+              >
+                <SplitChars
+                  wrapper={<span style={{ display: "inline-block" }} />}
+                >
+                  {t("home.prompt")}
+                </SplitChars>
+              </Tween>
+            </GsapControls>
+            {/* <FadeInLeftChars
+              playState={
+                animPlayState === "play" ? PlayState.play : PlayState.reverse
+              }
+              wrapper={<span style={{ display: "inline-block" }} />}
+            >
+              {t("home.prompt")}
+            </FadeInLeftChars> */}
+          </Reveal>
+        </Fragment>
+      )}
+    </AnimationContext.Consumer>
+  );
+};
+
+const IntroTween = () => {
+  const [playing, setPlaying] = React.useState(false);
+  const [progress, setProgress] = React.useState(0);
+  const [t, i18n] = useTranslation("common");
+  const classes = useStyles();
+
+  // const { animPlayState } = useContext(AnimationContext);
+  // console.log("animPlayState", animPlayState);
+  return (
+    <AnimationContext.Consumer>
+      {({ animPlayState }) => (
+        <Fragment>
+          <GsapControls
+            playState={
+              animPlayState === "play" ? PlayState.play : PlayState.reverse
+            }
+          >
+            <FadeInWithDelay delay={1.2}>
+              <Box position="relative" className={classes.content}>
+                <Typography variant="h3" color="textPrimary" align="center">
+                  {t("home.intro_general")}
+                </Typography>
+              </Box>
+            </FadeInWithDelay>
+          </GsapControls>
+        </Fragment>
+      )}
+    </AnimationContext.Consumer>
+  );
+};
+
 export const Home = (props) => {
   const [t, i18n] = useTranslation("common");
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const contentRef = useRef(null);
   const footerRef = useRef(null);
+  const [controller] = useState(new ScrollMagic.Controller());
 
   const [timeline] = useState(new TimelineMax({ paused: true }));
 
@@ -123,66 +228,95 @@ export const Home = (props) => {
   const containerRef = useRef(null);
   const rootRef = useRef(null);
 
+  const sectionsRef = useRef(Array(4).fill(null));
+
+  const setRefs = useCallback(
+    (i) => (ref) => {
+      sectionsRef.current[i] = ref;
+    },
+    []
+  );
+
+  const [animPlayState, setAnimPlayState] = useState("play");
 
   useEffect(() => {
-    console.clear();
-    const container = containerRef.current;
     const root = rootRef.current;
-    const controller = new ScrollMagic.Controller();
-    const sections = document.querySelectorAll("section");
-    const tl = new TimelineMax();
+    const sections = sectionsRef.current;
     const offset = window.innerHeight;
 
-    for (let i = 1; i < sections.length; i++) {
-      console.log(sections[i]);
-      tl.from(
-        sections[i],
-        1,
-        { xPercent: 100, ease: Linear.easeNone },
-        "+=1"
-      );
-    }
+    const fadeOutAnimation = new TimelineMax();
+    // Set fade out animation for home page
+    // fadeOutAnimation.to(sections[0], offset, { opacity: 0.3, delay: offset });
+    fadeOutAnimation.fromTo(
+      sections[0],
+      offset,
+      { opacity: 1, delay: offset },
+      { opacity: 1, immediateRender: false }
+    );
+
+    // Fade out scene
+    const scene = new ScrollMagic.Scene({
+      triggerElement: root,
+      triggerHook: FADEOUT_TRIGGER,
+      duration: "100%",
+    })
+      .setTween(fadeOutAnimation)
+      // .addIndicators({
+      //   colorTrigger: "red",
+      //   colorStart: "red",
+      //   colorEnd: "red",
+      //   indent: 40,
+      // })
+      .on("progress", function ({ progress }) {
+        if (progress > FADEOUT_THRESHOLD) {
+          if (animPlayState !== PlayState.reverse) {
+            setAnimPlayState(PlayState.reverse);
+          }
+        } else {
+          if (animPlayState !== PlayState.play) {
+            setAnimPlayState(PlayState.play);
+          }
+        }
+      })
+      .addTo(controller);
+
+    return () => {
+      scene.destroy();
+      fadeOutAnimation.invalidate();
+    };
+  }, [animPlayState]);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const sections = sectionsRef.current;
+    const offset = window.innerHeight;
+
+    const panelAnimation = new TimelineMax();
+
+    // Set entering animtion for each section
+    sections.forEach((section, i) => {
+      if (i === 0) return; // First page is not transformed by default
+      panelAnimation.from(section, offset, {
+        xPercent: 100,
+        ease: Linear.easeNone,
+        delay: 300,
+      });
+    });
 
     new ScrollMagic.Scene({
       triggerElement: root,
       triggerHook: "onLeave",
-      duration: "300%",
+      duration: `${(sections.length - 1) * 100}%`,
     })
       .setPin(root)
-      .setTween(tl)
-      .addIndicators({
-        colorTrigger: "white",
-        colorStart: "white",
-        colorEnd: "white",
-        indent: 40,
-      })
-      .addTo(controller);
-
-    $("section").each(function (i) {
-      // let target1 = $(this).find("h1");
-      // let split = new SplitText(target1, { type: "chars" });
-      // const tl = new TimelineMax();
-      // tl.staggerFrom(
-      //   split.chars,
-      //   0.5,
-      //   { opacity: 0, scale: 0.5, y: -100, ease: Bounce.easeOut },
-      //   0.05
-      // );
-
-      // new ScrollMagic.Scene({
-      //   triggerElement: root,
-      //   triggerHook: 0,
-      //   offset: i * offset,
+      .setTween(panelAnimation)
+      // .addIndicators({
+      //   colorTrigger: "white",
+      //   colorStart: "white",
+      //   colorEnd: "white",
+      //   indent: 40,
       // })
-      //   .setTween(tl)
-      //   .addTo(controller)
-      //   .addIndicators({
-      //     colorTrigger: "white",
-      //     colorStart: "white",
-      //     colorEnd: "white",
-      //     indent: 40,
-      //   });
-    });
+      .addTo(controller);
   }, []);
 
   const Panel = ({
@@ -203,84 +337,73 @@ export const Home = (props) => {
       <Box {...BoxProps}>{children}</Box>
     </div>
   );
-
   const introSection = (
-    <Panel className={classes.introSection}>
-      <Box position="relative" ref={headerRef}>
-        <Typography
-          className={classes.splitText}
-          variant="h2"
-          color="textPrimary"
-          gutterBottom
-        >
-          <Reveal trigger={<div />}>
-            <FadeInLeftChars
-              wrapper={<span style={{ display: "inline-block" }} />}
-            >
-              {t("home.prompt")}
-            </FadeInLeftChars>
-          </Reveal>
-        </Typography>
-      </Box>
-      <Reveal trigger={<div />}>
-        <FadeInWithDelay delay={1.2}>
-          <Box position="relative" className={classes.content} ref={contentRef}>
-            <Typography variant="h3" color="textPrimary" align="center">
-              {t("home.intro_general")}
-            </Typography>
-          </Box>
-        </FadeInWithDelay>
-      </Reveal>
-    </Panel>
+    <AnimationContext.Provider value={{ animPlayState }}>
+      <Panel className={classes.introSection}>
+        <Box position="relative" ref={headerRef}>
+          <Typography
+            className={classes.splitText}
+            variant="h2"
+            color="textPrimary"
+            gutterBottom
+          >
+            <HiTween />
+          </Typography>
+        </Box>
+        {/* <Reveal trigger={<div />}> */}
+        <IntroTween />
+        {/* </Reveal> */}
+      </Panel>
+    </AnimationContext.Provider>
   );
 
   const csSection = (
-    <Panel className={classes.csSection}>
-      <Paper className={classes.paper}>
-        <Box className={classes.offset}></Box>
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase className={classes.image}></ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography color="textPrimary">
-                  {t("home.intro_cs")}
-                </Typography>
+    <Panel>
+      <Controls playState={PlayState.stop}>
+        <Timeline>
+          <Grid container sm={12}>
+            {ICONS.map((icon) => (
+              <Grid sm={4}>
+                <TweenGridIcon icon={icon} />
               </Grid>
-              <Grid item>
-                <Typography variant="body2" style={{ cursor: "pointer" }}>
-                  Remove
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">$19.00</Typography>
-            </Grid>
+            ))}
           </Grid>
-        </Grid>
-      </Paper>
+        </Timeline>
+      </Controls>
     </Panel>
   );
 
   return (
-    <Box className={classes.root} ref={rootRef}>
-      <div className={classes.container} ref={containerRef}>
-        <section className={classNames(classes.panel, classes.darkBG)}>
-          {introSection}
-        </section>
-        <section className={classNames(classes.panel, classes.lightBG)}>
-          <h1>Pin Panel A</h1>
-        </section>
+    <Box>
+      <div className={classes.root} ref={rootRef}>
+        <div className={classes.container} ref={containerRef}>
+          <section
+            ref={setRefs(0)}
+            className={classNames(classes.panel, classes.darkBG)}
+          >
+            {introSection}
+          </section>
+          <section
+            ref={setRefs(1)}
+            className={classNames(classes.panel, classes.lightBG)}
+          >
+            {csSection}
+          </section>
 
-        <section className={classNames(classes.panel, classes.darkBG)}>
-          <h1>Pin Panel B</h1>
-        </section>
+          <section
+            ref={setRefs(2)}
+            className={classNames(classes.panel, classes.darkBG)}
+          >
+            <h1>Pin Panel B</h1>
+          </section>
 
-        <section className={classNames(classes.panel, classes.lightBG)}>
-          <h1>Pin Panel C</h1>
-        </section>
+          <section
+            ref={setRefs(3)}
+            className={classNames(classes.panel, classes.lightBG)}
+          >
+            <h1>Pin Panel C</h1>
+          </section>
+        </div>
       </div>
     </Box>
   );

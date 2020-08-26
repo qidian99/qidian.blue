@@ -3,6 +3,7 @@ import { Fragment } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { SplitChars, SplitWords, Timeline, Tween } from "react-gsap";
 import { gsap } from "gsap";
+import { makeStyles } from "@material-ui/core";
 
 export const FadeIn = ({
   children,
@@ -90,16 +91,19 @@ export const FadeInLeftChars = ({
   children: React.ReactNode;
   wrapper: ReactComponentElement<any>;
   [key: string]: any;
-}) => (
-  <Tween
-    from={{ opacity: 0, x: "-100vw" }}
-    ease="power1.inOut"
-    {...rest}
-    stagger={0.1}
-  >
-    <SplitChars wrapper={wrapper}>{children}</SplitChars>
-  </Tween>
-);
+}) => {
+  console.log("rest playstate", rest);
+  return (
+    <Tween
+      from={{ opacity: 0, x: "-100vw" }}
+      ease="power1.inOut"
+      {...rest}
+      stagger={0.1}
+    >
+      <SplitChars wrapper={wrapper}>{children}</SplitChars>
+    </Tween>
+  );
+};
 
 export const FadeInLeftWords = ({
   children,
@@ -231,3 +235,84 @@ export const CutText = ({
     </svg>
   );
 };
+
+
+export const getBackgroundPosition = (index) => {
+  let first, second;
+
+  switch (index % 3) {
+    case 0:
+      first = 'left';
+      break;
+    case 1:
+      first = 'center';
+      break;
+    case 2:
+      first = 'right';
+      break;
+    default:
+      break;
+  }
+  switch (Math.floor(index / 3)) {
+    case 0:
+      second = 'top';
+      break;
+    case 1:
+      second = 'center';
+      break;
+    case 2:
+      second = 'bottom';
+      break;
+    default:
+      break;
+  }
+
+  return `${first} ${second}`;
+}
+
+
+export const TWEEN_IMAGE_BG_SIZE = 200;
+
+const useStyles = makeStyles({
+  tweenImgBgContainer: {
+    width: TWEEN_IMAGE_BG_SIZE,
+    height: TWEEN_IMAGE_BG_SIZE,
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  tweenImgBg: {
+    width: "33.33%",
+    height: "33.33%",
+    overflow: "hidden",
+    backgroundSize: `${TWEEN_IMAGE_BG_SIZE}px ${TWEEN_IMAGE_BG_SIZE}px`,
+  },
+});
+export const TweenGridIcon = ({ icon }) => {
+  const [classes] = useState(useStyles());
+  return (
+    <div className={classes.tweenImgBgContainer}>
+      <Tween
+        from={{ scale: 0 }}
+        stagger={{ from: "center", amount: 1, grid: [3, 3] }}
+        duration={1}
+        ease="elastic.out(2, 0.5)"
+        position="0"
+      >
+        {Array(9)
+          .fill(0)
+          .map((_, index) => {
+            // console.log(getBackgroundPosition(index));
+            return (
+              <div
+                className={classes.tweenImgBg}
+                style={{
+                  backgroundImage: `url("${icon}")`,
+                  backgroundPosition: getBackgroundPosition(index),
+                }}
+              />
+            );
+          })}
+      </Tween>
+    </div>
+  );
+}

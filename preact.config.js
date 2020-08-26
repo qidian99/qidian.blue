@@ -16,6 +16,11 @@ export default (config, env, helpers) => {
   // console.log(path.resolve(__dirname, 'node_modules/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'));
   // console.log(config);
 
+  config.module.rules.push({
+    test: /\.svg$/,
+    use: ['preact-svg-loader'],
+  })
+
   const aliases = config.resolve.alias;
   aliases.react = "preact/compat";
   aliases["react-dom"] = "preact/compat";

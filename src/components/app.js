@@ -25,6 +25,9 @@ import common_enUS from '../translations/en-US/common.json';
 import common_zhCN from '../translations/zh-CN/common.json';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
+import "animation.gsap";
+// import "debug.addIndicators";
+
 i18next.init({
 	interpolation: { escapeValue: false },  // React already does escaping
 	lng: defaultLanguage,                            // language to use
@@ -53,6 +56,12 @@ const LIGHT_THEME = {
 	palette: {
 		type: 'light',
 	},
+	// palette: {
+	// 	text: {
+	// 		primary: "#fff",
+	// 		secondary: "#000"
+	// 	},
+	// },
 };
 const App = () => {
 

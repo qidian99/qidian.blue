@@ -1,13 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useCallback, useContext } from "preact/hooks";
 import $ from "jquery";
-import { gsap } from "gsap";
+import { gsap, Tween } from "gsap";
 import ScrollMagic from "ScrollMagic";
-import "animation.gsap";
-import "debug.addIndicators";
 
 import "./css/project.css";
-import { Tween } from "gsap/gsap-core";
 export const Projects = () => {
   // init controller
   const [controller] = useState(new ScrollMagic.Controller());
@@ -47,12 +44,12 @@ export const Projects = () => {
       // .on("leave", function (e) {
       //   menuAnim.reverse();
       // })
-      .addIndicators({
-        name: "Box Timeline",
-        colorTrigger: "white",
-        colorStart: "white",
-        colorEnd: "white",
-      })
+      // .addIndicators({
+      //   name: "Box Timeline",
+      //   colorTrigger: "white",
+      //   colorStart: "white",
+      //   colorEnd: "white",
+      // })
       .setTween(tween)
       .addTo(controller);
 

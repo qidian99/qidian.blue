@@ -27,6 +27,7 @@
     "eslint-config-synacor": "^3.0.5",
     "imports-loader": "^0.8.0",
     "preact-cli": "^3.0.1",
+    "preact-svg-loader": "^0.2.1",
     "script-loader": "^0.7.2"
   },
   "dependencies": {
@@ -46,7 +47,7 @@
     "preact-router": "^3.2.1",
     "preact-shadow-dom": "^1.0.1",
     "react-chartjs-2": "^2.10.0",
-    "react-gsap": "^2.2.1",
+    "react-gsap": "file:modules/react-gsap",
     "react-i18next": "^11.7.0",
     "react-intl": "^5.7.0",
     "react-router-dom": "^5.2.0",
