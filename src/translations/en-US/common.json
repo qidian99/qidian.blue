@@ -18,8 +18,8 @@
 	},
 	"home": {
 		"content": "Home Content",
-		"intro_backend": "As for back-end, I have done many event-driven, object-oriented, MVC back-end implementations, and I am familiar with SQL, NoSQL, graph database, real-time databases, and other middlewares such as GraphQL .",
-		"intro_frontend": "I have a wealth of full stack development experience. As for front-end, I am familiar with all Javascript frameworks on both web and mobile. I am proficient in using transpiling tools such as Webpack and Rollup to bundle applications, and developing portable web components and custom libraries.",
+		"intro_backend": "As for back-end development, I have done many event-driven, object-oriented, MVC implementations, and I am familiar with SQL, NoSQL, graph database, real-time databases, and other middlewares such as GraphQL .",
+		"intro_frontend": "I have a wealth of full stack development experience. As for front-end development, I am familiar with all Javascript frameworks for both web and mobile. I am proficient in using transpiling tools such as Webpack and Rollup to bundle applications, and developing portable web components and custom libraries.",
 		"intro_general": "an uprising forth year student pursuing a dual degree in computer science and applied mathematics at the University of California, San Diego.",
 		"prompt": "Hi! I am Dian,",
 		"title": "Home"
@@ -27,13 +27,23 @@
 	"icons": {
 		"bootstrap": "Bootstrap, Material UI, Ant Design",
 		"css": "CSS, and Preprocessing tools such as LESS, SASS",
+		"drupal": "Drupal 7, 8, 9, other legacy CMSes, Webflow, and eCommerce platforms",
+		"graphql": "GraphQL API",
 		"js": "Vanilla Javascript",
+		"linux": "Linux, Unix and other operating systems",
+		"mysql": "Common databases such as MySQL, Postgres, MongoDB, Neo4j, etc.",
+		"nginx": "Nginx and Apache for single node backend",
+		"node": "Node and all mainstream middlewares such as Express and Apollo",
+		"php": "PHP，CakePHP，and other legacy MVC framework",
 		"preact": "Preact, Web components, Widgets for server-side rendering",
 		"react": "React and React Native",
+		"ruby": "Ruby and Ruby on Rails",
+		"spring": "Spring Boot 2.0",
 		"swift": "Swift",
 		"ts": "Typescript",
 		"vue": "Vue and MpVue",
-		"webpack": "Webpack, Rollup, Tsdx, and other transpiling tools"
+		"webpack": "Webpack, Rollup, Tsdx, and other transpiling tools",
+		"yarn": "Yarn, NPM and other package managers"
 	},
 	"language": {
 		"enUS": "English",

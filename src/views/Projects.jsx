@@ -4,7 +4,7 @@ import $ from "jquery";
 import { gsap, Tween } from "gsap";
 import ScrollMagic from "ScrollMagic";
 
-import "./css/project.css";
+// import "./css/project.css";
 export const Projects = () => {
   // init controller
   const [controller] = useState(new ScrollMagic.Controller());

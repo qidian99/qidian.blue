@@ -18,7 +18,7 @@ import {
 } from "react-gsap";
 
 // import Controls from '../components/gsap/Controls';
-import { gsap, TimelineMax, TweenMax, Linear } from "gsap";
+import { gsap, TimelineMax, TweenMax, Linear, Power1 } from "gsap";
 import ScrollMagic from "ScrollMagic";
 import {
   makeStyles,
@@ -41,15 +41,18 @@ import {
   CutText,
   FadeInWithDelay,
   getBackgroundPosition,
+  getTooltipPosition,
   TweenGridIcon,
   TWEEN_IMAGE_BG_SIZE,
   TWEEN_IMAGE_PADDING,
 } from "../utils";
 
 import { MyContext } from "../store/context";
-import { GRID_ICONS } from "../utils/assets";
+import { FRONTEND_GRID_ICONS, BACKEND_GRID_ICONS } from "../utils/assets";
 
+import PlaneImage from "../assets/plane.png";
 import GeiselImage from "../assets/geisel.jpg";
+import { MuiTimeline, Panel } from '../components/mui';
 
 const AnimationContext = createContext(null);
 
@@ -145,86 +148,13 @@ const useStyles = makeStyles((theme) => {
         opacity: 0.6,
       },
     },
-    csSection: {},
+    frontendSection: {},
     image: {
       width: 128,
       height: 128,
     },
   };
 });
-
-const HiTween = () => {
-  const [playing, setPlaying] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
-  const [t, i18n] = useTranslation("common");
-
-  return (
-    <AnimationContext.Consumer>
-      {({ animPlayState }) => (
-        <Fragment>
-          <Reveal trigger={<div />}>
-            <GsapControls
-              playState={
-                animPlayState === "play" ? PlayState.play : PlayState.reverse
-              }
-            >
-              <Tween
-                from={{ opacity: 0, x: "-100vw" }}
-                ease="power1.inOut"
-                stagger={0.1}
-              >
-                <SplitChars
-                  wrapper={<span style={{ display: "inline-block" }} />}
-                >
-                  {t("home.prompt")}
-                </SplitChars>
-              </Tween>
-            </GsapControls>
-            {/* <FadeInLeftChars
-              playState={
-                animPlayState === "play" ? PlayState.play : PlayState.reverse
-              }
-              wrapper={<span style={{ display: "inline-block" }} />}
-            >
-              {t("home.prompt")}
-            </FadeInLeftChars> */}
-          </Reveal>
-        </Fragment>
-      )}
-    </AnimationContext.Consumer>
-  );
-};
-
-const IntroTween = () => {
-  const [playing, setPlaying] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
-  const [t, i18n] = useTranslation("common");
-  const classes = useStyles();
-
-  // const { animPlayState } = useContext(AnimationContext);
-  // console.log("animPlayState", animPlayState);
-  return (
-    <AnimationContext.Consumer>
-      {({ animPlayState }) => (
-        <Fragment>
-          <GsapControls
-            playState={
-              animPlayState === "play" ? PlayState.play : PlayState.reverse
-            }
-          >
-            <FadeInWithDelay delay={1.2}>
-              <Box position="relative" className={classes.content}>
-                <Typography variant="h3" color="textPrimary" align="center">
-                  {t("home.intro_general")}
-                </Typography>
-              </Box>
-            </FadeInWithDelay>
-          </GsapControls>
-        </Fragment>
-      )}
-    </AnimationContext.Consumer>
-  );
-};
 
 export const Home = (props) => {
   const [t, i18n] = useTranslation("common");
@@ -254,7 +184,9 @@ export const Home = (props) => {
     []
   );
 
-  const [animPlayState, setAnimPlayState] = useState("play");
+  const animPlayState = useRef("play");
+  const hiControlsRef = useRef(null);
+  const introControlsRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -263,7 +195,6 @@ export const Home = (props) => {
 
     const fadeOutAnimation = new TimelineMax();
     // Set fade out animation for home page
-    // fadeOutAnimation.to(sections[0], offset, { opacity: 0.3, delay: offset });
     fadeOutAnimation.fromTo(
       sections[0],
       offset,
@@ -286,12 +217,16 @@ export const Home = (props) => {
       // })
       .on("progress", function ({ progress }) {
         if (progress > FADEOUT_THRESHOLD) {
-          if (animPlayState !== PlayState.reverse) {
-            setAnimPlayState(PlayState.reverse);
+          if (animPlayState.current !== PlayState.reverse) {
+            animPlayState.current = PlayState.reverse;
+            hiControlsRef.current.setPlayState(PlayState.reverse);
+            introControlsRef.current.setPlayState(PlayState.reverse);
           }
         } else {
-          if (animPlayState !== PlayState.play) {
-            setAnimPlayState(PlayState.play);
+          if (animPlayState.current !== PlayState.play) {
+            animPlayState.current = PlayState.play;
+            hiControlsRef.current.setPlayState(PlayState.play);
+            introControlsRef.current.setPlayState(PlayState.play);
           }
         }
       })
@@ -301,7 +236,7 @@ export const Home = (props) => {
       scene.destroy();
       fadeOutAnimation.invalidate();
     };
-  }, [animPlayState]);
+  }, []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -313,11 +248,24 @@ export const Home = (props) => {
     // Set entering animtion for each section
     sections.forEach((section, i) => {
       if (i === 0) return; // First page is not transformed by default
-      panelAnimation.from(section, offset, {
-        xPercent: 100,
-        ease: Linear.easeNone,
-        delay: 300,
-      });
+
+      if (i >= 1 && i <= 2) {
+        panelAnimation.from(section, offset, {
+          xPercent: 100,
+          ease: Linear.easeNone,
+          delay: 300,
+        });
+        return;
+      }
+
+      if (i >= 2) {
+        panelAnimation.from(section, offset, {
+          yPercent: 100,
+          ease: Linear.easeNone,
+          delay: 300,
+        });
+        return;
+      }
     });
 
     new ScrollMagic.Scene({
@@ -336,47 +284,53 @@ export const Home = (props) => {
       .addTo(controller);
   }, []);
 
-  const Panel = ({
-    className,
-    children,
-    spacing = 6,
-    BoxProps = {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      flex: "1",
-      height: "100%",
-    },
-  }) => (
-    <div className={classNames(classes.panel, className)}>
-      <Box className={classNames(classes.offset, classes.padder)} />
-      <Box className={classes.remainder} {...{ ...BoxProps, p: spacing }}>
-        {children}
-      </Box>
-    </div>
-  );
   const introSection = (
-    <AnimationContext.Provider value={{ animPlayState }}>
-      <Panel className={classes.introSection}>
-        <Box position="relative" ref={headerRef}>
-          <Typography
-            className={classes.splitText}
-            variant="h2"
-            color="textPrimary"
-            gutterBottom
-          >
-            <HiTween />
-          </Typography>
-        </Box>
-        {/* <Reveal trigger={<div />}> */}
-        <IntroTween />
-        {/* </Reveal> */}
-      </Panel>
-    </AnimationContext.Provider>
+    // <AnimationContext.Provider value={{ animPlayState }}>
+    <Panel className={classes.introSection}>
+      <Box position="relative" ref={headerRef}>
+        <Typography
+          className={classes.splitText}
+          variant="h2"
+          color="textPrimary"
+          gutterBottom
+        >
+          <Fragment>
+            <Reveal trigger={<div />}>
+              <GsapControls ref={hiControlsRef}>
+                <Tween
+                  from={{ opacity: 0, x: "-100vw" }}
+                  ease="power1.inOut"
+                  stagger={0.075}
+                >
+                  <SplitChars
+                    wrapper={<span style={{ display: "inline-block" }} />}
+                  >
+                    {t("home.prompt")}
+                  </SplitChars>
+                </Tween>
+              </GsapControls>
+            </Reveal>
+          </Fragment>
+        </Typography>
+      </Box>
+      {/* <Reveal trigger={<div />}> */}
+      <Fragment>
+        <GsapControls ref={introControlsRef}>
+          <FadeInWithDelay delay={1.2}>
+            <Box position="relative" className={classes.content}>
+              <Typography variant="h3" color="textPrimary" align="center">
+                {t("home.intro_general")}
+              </Typography>
+            </Box>
+          </FadeInWithDelay>
+        </GsapControls>
+      </Fragment>
+      {/* </Reveal> */}
+    </Panel>
+    // </AnimationContext.Provider>
   );
 
-  const csSection = (
+  const frontendSection = (
     <Panel spacing={6}>
       <Grid
         className={classes.panelGridContainer}
@@ -386,15 +340,24 @@ export const Home = (props) => {
         alignItems="center"
       >
         <Grid item xs>
-          <Typography variant="h4" color="textPrimary" align="center">
-            {t("home.intro_frontend")}
-          </Typography>
+          <Reveal repeat>
+            <FadeIn duration={2}>
+              <Typography variant="h4" color="textPrimary" align="center">
+                {t("home.intro_frontend")}
+              </Typography>
+            </FadeIn>
+          </Reveal>
         </Grid>
         <Grid item xs>
           <Reveal
             repeat
             trigger={
-              <Box justifyContent="center" alignItems="center" display="flex" />
+              <Box
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+                p={6}
+              />
             }
           >
             {/* <Controls playState={PlayState.stop}> */}
@@ -404,9 +367,13 @@ export const Home = (props) => {
                 container
                 className={classes.tweenGridContainer}
               >
-                {GRID_ICONS.map(({ icon, name }) => (
+                {FRONTEND_GRID_ICONS.map(({ icon, name }, i) => (
                   <Grid item xs={4} className={classes.tweenGridItem}>
-                    <Tooltip title={t(name)} arrow>
+                    <Tooltip
+                      title={t(name)}
+                      arrow
+                      placement={getTooltipPosition(i)}
+                    >
                       <TweenGridIcon icon={icon} />
                     </Tooltip>
                   </Grid>
@@ -417,6 +384,72 @@ export const Home = (props) => {
           {/* </Controls> */}
         </Grid>
       </Grid>
+    </Panel>
+  );
+
+  const backendSection = (
+    <Panel spacing={6}>
+      <Grid
+        className={classes.panelGridContainer}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item xs>
+          <Reveal repeat>
+            <FadeIn duration={2}>
+              <Typography variant="h4" color="textPrimary" align="center">
+                {t("home.intro_backend")}
+              </Typography>
+            </FadeIn>
+          </Reveal>
+        </Grid>
+        <Grid item xs>
+          <Reveal
+            repeat
+            trigger={
+              <Box
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+                p={6}
+              />
+            }
+          >
+            {/* <Controls playState={PlayState.stop}> */}
+            <Timeline>
+              <Grid
+                spacing={0}
+                container
+                className={classes.tweenGridContainer}
+              >
+                {BACKEND_GRID_ICONS.map(({ icon, name }, i) => (
+                  <Grid item xs={4} className={classes.tweenGridItem}>
+                    <Tooltip
+                      title={t(name)}
+                      arrow
+                      placement={getTooltipPosition(i)}
+                    >
+                      <TweenGridIcon icon={icon} />
+                    </Tooltip>
+                  </Grid>
+                ))}
+              </Grid>
+            </Timeline>
+          </Reveal>
+          {/* </Controls> */}
+        </Grid>
+      </Grid>
+    </Panel>
+  );
+
+  useEffect(() => {
+  }, []);
+
+  const experienceSection = (
+    <Panel>
+      <MuiTimeline />
     </Panel>
   );
 
@@ -434,21 +467,21 @@ export const Home = (props) => {
             ref={setRefs(1)}
             className={classNames(classes.panel, classes.lightBG)}
           >
-            {csSection}
+            {frontendSection}
           </section>
 
           <section
             ref={setRefs(2)}
             className={classNames(classes.panel, classes.darkBG)}
           >
-            <h1>Pin Panel B</h1>
+            {backendSection}
           </section>
 
           <section
             ref={setRefs(3)}
             className={classNames(classes.panel, classes.lightBG)}
           >
-            <h1>Pin Panel C</h1>
+            {experienceSection}
           </section>
         </div>
       </div>

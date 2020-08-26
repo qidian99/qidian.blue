@@ -27,13 +27,23 @@
 	"icons": {
 		"bootstrap": "Bootstrap框架，Material UI设计，Ant Design",
 		"css": "CSS, LESS, SASS等预处理工具",
+		"drupal": "Drupal 7, 8, 9，Webflow，其他传统CMS和独立站",
+		"graphql": "GraphQL API",
 		"js": "原生Javascript",
+		"linux": "Linux, Unix等操作系统",
+		"mysql": "MySQL, Postgres, MongoDB, Neo4j等常用数据库",
+		"nginx": "Nginx和Apache，仅用于单节点部署",
+		"node": "Node以及所有主流中间件",
+		"php": "PHP，CakePHP，和其他legacy MVC框架",
 		"preact": "Preact，Web components, Widgets，用于服务器端渲染",
 		"react": "React 和 React Native",
+		"ruby": "Ruby 以及 Ruby on Rails",
+		"spring": "Spring Boot 2.0",
 		"swift": "Swift iOS编程语言",
 		"ts": "Typescript",
 		"vue": "Vue 和 MpVue",
-		"webpack": "Webpack, Rollup, Tsdx等透析工具"
+		"webpack": "Webpack, Rollup, Tsdx等捆绑工具",
+		"yarn": "Yarn, NPM等包管理工具"
 	},
 	"language": {
 		"enUS": "英文",

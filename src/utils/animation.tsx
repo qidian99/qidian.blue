@@ -92,7 +92,7 @@ export const FadeInLeftChars = ({
   wrapper: ReactComponentElement<any>;
   [key: string]: any;
 }) => {
-  console.log("rest playstate", rest);
+  // console.log("rest playstate", rest);
   return (
     <Tween
       from={{ opacity: 0, x: "-100vw" }}
@@ -269,6 +269,31 @@ export const getBackgroundPosition = (index) => {
   return `${first} ${second}`;
 };
 
+export const getTooltipPosition = (index) => {
+  switch (index) {
+    case 0:
+      return "top-start";
+    case 1:
+      return "top";
+    case 2:
+      return "top-end";
+    case 3:
+      return "left";
+    case 4:
+      return "bottom";
+    case 5:
+      return "right";
+    case 6:
+      return "bottom-start";
+    case 7:
+      return "bottom";
+    case 8:
+      return "bottom-end";
+    default:
+      break;
+  }
+};
+
 export const TWEEN_IMAGE_BG_SIZE = 160;
 export const TWEEN_IMAGE_PADDING = 20;
 
@@ -292,33 +317,35 @@ type TweenGridProps = {
   icon: any;
 };
 
-export const TweenGridIcon = React.forwardRef((props: TweenGridProps, ref: React.LegacyRef<any>) => {
-  const [classes] = useState(useStyles());
-  const { icon } = props;
-  return (
-    <div {...props} ref={ref} className={classes.tweenImgBgContainer}>
-      <Tween
-        from={{ scale: 0 }}
-        stagger={{ from: "center", amount: 1, grid: [3, 3] }}
-        duration={1}
-        ease="elastic.out(2, 0.5)"
-        position="0"
-      >
-        {Array(9)
-          .fill(0)
-          .map((_, index) => {
-            // console.log(getBackgroundPosition(index));
-            return (
-              <div
-                className={classes.tweenImgBg}
-                style={{
-                  backgroundImage: `url("${icon}")`,
-                  backgroundPosition: getBackgroundPosition(index),
-                }}
-              />
-            );
-          })}
-      </Tween>
-    </div>
-  );
-});
+export const TweenGridIcon = React.forwardRef(
+  (props: TweenGridProps, ref: React.LegacyRef<any>) => {
+    const [classes] = useState(useStyles());
+    const { icon } = props;
+    return (
+      <div {...props} ref={ref} className={classes.tweenImgBgContainer}>
+        <Tween
+          from={{ scale: 0 }}
+          stagger={{ from: "center", amount: 1, grid: [3, 3] }}
+          duration={1}
+          ease="elastic.out(2, 0.5)"
+          position="0"
+        >
+          {Array(9)
+            .fill(0)
+            .map((_, index) => {
+              // console.log(getBackgroundPosition(index));
+              return (
+                <div
+                  className={classes.tweenImgBg}
+                  style={{
+                    backgroundImage: `url("${icon}")`,
+                    backgroundPosition: getBackgroundPosition(index),
+                  }}
+                />
+              );
+            })}
+        </Tween>
+      </div>
+    );
+  }
+);

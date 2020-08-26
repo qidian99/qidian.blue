@@ -26,7 +26,7 @@ import common_zhCN from '../translations/zh-CN/common.json';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 import "animation.gsap";
-// import "debug.addIndicators";
+import "debug.addIndicators";
 
 i18next.init({
 	interpolation: { escapeValue: false },  // React already does escaping
