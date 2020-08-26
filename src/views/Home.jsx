@@ -27,10 +27,11 @@ import {
   Grid,
   Paper,
   ButtonBase,
+  Tooltip,
 } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
-import SplitText from "../../modules/SplitText.min";
+
 import {
   FadeIn,
   FadeInLeft,
@@ -41,27 +42,14 @@ import {
   FadeInWithDelay,
   getBackgroundPosition,
   TweenGridIcon,
+  TWEEN_IMAGE_BG_SIZE,
+  TWEEN_IMAGE_PADDING,
 } from "../utils";
 
 import { MyContext } from "../store/context";
+import { GRID_ICONS } from "../utils/assets";
 
 import GeiselImage from "../assets/geisel.jpg";
-import GithubIcon from "../assets/github.png";
-import LinuxIcon from "../assets/linux.png";
-import SwiftIcon from "../assets/swift.png";
-import WebpackIcon from "../assets/webpack.png";
-import YarnIcon from "../assets/yarn.png";
-import TSIcon from "../assets/typescript.png";
-import ReactIcon from "../assets/react.png";
-const ICONS = [
-  ReactIcon,
-  GithubIcon,
-  LinuxIcon,
-  SwiftIcon,
-  WebpackIcon,
-  YarnIcon,
-  TSIcon,
-];
 
 const AnimationContext = createContext(null);
 
@@ -86,14 +74,26 @@ const useStyles = makeStyles((theme) => {
       overflow: "hidden",
     },
     offset: theme.mixins.toolbar, // for the toolbar
+    padder: {
+      flex: "0 1 auto",
+    },
+    remainder: {
+      flex: "1 1 auto",
+    },
     content: {
       // for the typography content
       marginBottom: theme.spacing(6),
     },
     panel: {
+      overflowY: "scroll",
       height: "100%",
       width: "100%",
+      display: "flex",
+      flexFlow: "column",
       position: "absolute", // panels should be absolute when they shift in
+    },
+    primaryBG: {
+      backgroundColor: theme.palette.text.main,
     },
     lightBG: {
       backgroundColor: theme.palette.primary.light,
@@ -112,6 +112,22 @@ const useStyles = makeStyles((theme) => {
     splitText: {
       fontWeight: theme.typography.fontWeightBold,
     },
+    tweenGridContainer: {
+      width: (TWEEN_IMAGE_BG_SIZE + TWEEN_IMAGE_PADDING) * 3,
+      height: (TWEEN_IMAGE_BG_SIZE + TWEEN_IMAGE_PADDING) * 3,
+      marginTop: "5vh",
+      marginBottom: "5vh",
+    },
+    panelGridContainer: {
+      height: "100%",
+    },
+    tweenGridItem: {
+      width: TWEEN_IMAGE_BG_SIZE + TWEEN_IMAGE_PADDING,
+      height: TWEEN_IMAGE_BG_SIZE + TWEEN_IMAGE_PADDING,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
     /***
      * Content Specific
      */
@@ -120,6 +136,7 @@ const useStyles = makeStyles((theme) => {
         content: "''",
         backgroundSize: "cover",
         backgroundImage: `url(${GeiselImage})`,
+        backgroundPosition: "center center",
         position: "absolute",
         top: 0,
         right: 0,
@@ -322,8 +339,8 @@ export const Home = (props) => {
   const Panel = ({
     className,
     children,
+    spacing = 6,
     BoxProps = {
-      p: 6,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -333,8 +350,10 @@ export const Home = (props) => {
     },
   }) => (
     <div className={classNames(classes.panel, className)}>
-      <Box className={classes.offset} />
-      <Box {...BoxProps}>{children}</Box>
+      <Box className={classNames(classes.offset, classes.padder)} />
+      <Box className={classes.remainder} {...{ ...BoxProps, p: spacing }}>
+        {children}
+      </Box>
     </div>
   );
   const introSection = (
@@ -358,18 +377,46 @@ export const Home = (props) => {
   );
 
   const csSection = (
-    <Panel>
-      <Controls playState={PlayState.stop}>
-        <Timeline>
-          <Grid container sm={12}>
-            {ICONS.map((icon) => (
-              <Grid sm={4}>
-                <TweenGridIcon icon={icon} />
+    <Panel spacing={6}>
+      <Grid
+        className={classes.panelGridContainer}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item xs>
+          <Typography variant="h4" color="textPrimary" align="center">
+            {t("home.intro_frontend")}
+          </Typography>
+        </Grid>
+        <Grid item xs>
+          <Reveal
+            repeat
+            trigger={
+              <Box justifyContent="center" alignItems="center" display="flex" />
+            }
+          >
+            {/* <Controls playState={PlayState.stop}> */}
+            <Timeline>
+              <Grid
+                spacing={0}
+                container
+                className={classes.tweenGridContainer}
+              >
+                {GRID_ICONS.map(({ icon, name }) => (
+                  <Grid item xs={4} className={classes.tweenGridItem}>
+                    <Tooltip title={t(name)} arrow>
+                      <TweenGridIcon icon={icon} />
+                    </Tooltip>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-        </Timeline>
-      </Controls>
+            </Timeline>
+          </Reveal>
+          {/* </Controls> */}
+        </Grid>
+      </Grid>
     </Panel>
   );
 
@@ -379,7 +426,7 @@ export const Home = (props) => {
         <div className={classes.container} ref={containerRef}>
           <section
             ref={setRefs(0)}
-            className={classNames(classes.panel, classes.darkBG)}
+            className={classNames(classes.panel, classes.primaryBG)}
           >
             {introSection}
           </section>

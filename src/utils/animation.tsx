@@ -236,42 +236,41 @@ export const CutText = ({
   );
 };
 
-
 export const getBackgroundPosition = (index) => {
   let first, second;
 
   switch (index % 3) {
     case 0:
-      first = 'left';
+      first = "left";
       break;
     case 1:
-      first = 'center';
+      first = "center";
       break;
     case 2:
-      first = 'right';
+      first = "right";
       break;
     default:
       break;
   }
   switch (Math.floor(index / 3)) {
     case 0:
-      second = 'top';
+      second = "top";
       break;
     case 1:
-      second = 'center';
+      second = "center";
       break;
     case 2:
-      second = 'bottom';
+      second = "bottom";
       break;
     default:
       break;
   }
 
   return `${first} ${second}`;
-}
+};
 
-
-export const TWEEN_IMAGE_BG_SIZE = 200;
+export const TWEEN_IMAGE_BG_SIZE = 160;
+export const TWEEN_IMAGE_PADDING = 20;
 
 const useStyles = makeStyles({
   tweenImgBgContainer: {
@@ -287,10 +286,17 @@ const useStyles = makeStyles({
     backgroundSize: `${TWEEN_IMAGE_BG_SIZE}px ${TWEEN_IMAGE_BG_SIZE}px`,
   },
 });
-export const TweenGridIcon = ({ icon }) => {
+
+type TweenGridProps = {
+  children: React.ReactNode;
+  icon: any;
+};
+
+export const TweenGridIcon = React.forwardRef((props: TweenGridProps, ref: React.LegacyRef<any>) => {
   const [classes] = useState(useStyles());
+  const { icon } = props;
   return (
-    <div className={classes.tweenImgBgContainer}>
+    <div {...props} ref={ref} className={classes.tweenImgBgContainer}>
       <Tween
         from={{ scale: 0 }}
         stagger={{ from: "center", amount: 1, grid: [3, 3] }}
@@ -315,4 +321,4 @@ export const TweenGridIcon = ({ icon }) => {
       </Tween>
     </div>
   );
-}
+});

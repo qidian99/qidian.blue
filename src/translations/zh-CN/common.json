@@ -18,10 +18,22 @@
 	},
 	"home": {
 		"content": "主页内容",
-		"intro_cs": "我有着丰富的全栈开发经历，熟悉前端所有主流框架，绝大多数事件驱动，面向对象，MVC的后端实现。",
+		"intro_backend": "后端方面，我做过绝大多数事件驱动，面向对象，MVC的后端实现。并且熟悉SQL，NoSQL，图数据库，实时数据库，以及GraphQL等中间件。",
+		"intro_frontend": "我有着丰富的全栈开发经历。前端方面熟悉网页和移动端所有主流框架，并且能熟练地进行透析，打包，便携式组件和库的开发。",
 		"intro_general": "目前在加州大学圣地亚哥分校攻读计算机和应用数学双学位。",
 		"prompt": "你好，我是齐典，",
 		"title": "主页"
+	},
+	"icons": {
+		"bootstrap": "Bootstrap框架，Material UI设计，Ant Design",
+		"css": "CSS, LESS, SASS等预处理工具",
+		"js": "原生Javascript",
+		"preact": "Preact，Web components, Widgets，用于服务器端渲染",
+		"react": "React 和 React Native",
+		"swift": "Swift iOS编程语言",
+		"ts": "Typescript",
+		"vue": "Vue 和 MpVue",
+		"webpack": "Webpack, Rollup, Tsdx等透析工具"
 	},
 	"language": {
 		"enUS": "英文",

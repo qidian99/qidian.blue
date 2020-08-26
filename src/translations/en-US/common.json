@@ -18,10 +18,22 @@
 	},
 	"home": {
 		"content": "Home Content",
-		"intro_cs": "I have a wealth of full-stack development experience, and I am familiar with all major front-end frameworks, most event-driven, object-oriented, and MVC back-end implementations.",
+		"intro_backend": "As for back-end, I have done many event-driven, object-oriented, MVC back-end implementations, and I am familiar with SQL, NoSQL, graph database, real-time databases, and other middlewares such as GraphQL .",
+		"intro_frontend": "I have a wealth of full stack development experience. As for front-end, I am familiar with all Javascript frameworks on both web and mobile. I am proficient in using transpiling tools such as Webpack and Rollup to bundle applications, and developing portable web components and custom libraries.",
 		"intro_general": "an uprising forth year student pursuing a dual degree in computer science and applied mathematics at the University of California, San Diego.",
 		"prompt": "Hi! I am Dian,",
 		"title": "Home"
+	},
+	"icons": {
+		"bootstrap": "Bootstrap, Material UI, Ant Design",
+		"css": "CSS, and Preprocessing tools such as LESS, SASS",
+		"js": "Vanilla Javascript",
+		"preact": "Preact, Web components, Widgets for server-side rendering",
+		"react": "React and React Native",
+		"swift": "Swift",
+		"ts": "Typescript",
+		"vue": "Vue and MpVue",
+		"webpack": "Webpack, Rollup, Tsdx, and other transpiling tools"
 	},
 	"language": {
 		"enUS": "English",
