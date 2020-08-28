@@ -5,6 +5,7 @@ import Provider from '../Provider';
 
 type ControlsProps = {
   playState?: PlayState;
+  ref?: any;
 };
 
 type ControlsState = {
@@ -21,6 +22,11 @@ class GsapControls extends Provider<ControlsProps, ControlsState> {
     playState: undefined,
     prevPlayState: undefined,
   };
+
+  constructor(props: ControlsProps) {
+    super(props);
+    this.setPlayState = this.setPlayState.bind(this)
+  }
 
   componentDidMount() {
     if (this.consumers.length) {
@@ -44,6 +50,10 @@ class GsapControls extends Provider<ControlsProps, ControlsState> {
 
         const totalProgress = gsap.totalProgress();
       }
+    }
+
+    if (this.props.ref) {
+      this.props.ref.current = this.setPlayState;
     }
   }
 

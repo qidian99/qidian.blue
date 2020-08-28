@@ -1,9 +1,6 @@
-
-import GithubIcon from "../assets/github.png";
-import LinuxIcon from "../assets/linux.png";
+// Frontend
 import SwiftIcon from "../assets/swift2.png";
 import WebpackIcon from "../assets/webpack.png";
-import YarnIcon from "../assets/yarn.png";
 import TSIcon from "../assets/typescript.png";
 import JSIcon from "../assets/javascript.png";
 import CSSIcon from "../assets/css.png";
@@ -12,10 +9,28 @@ import ReactIcon from "../assets/react.png";
 import PreactIcon from "../assets/preact.png";
 import VueIcon from "../assets/vuejs.png";
 
+// Backend
+import PHPIcon from "../assets/php.png";
+import RubyIcon from "../assets/ruby.png";
+import SpringIcon from "../assets/spring.png";
+
+import LinuxIcon from "../assets/linux.png";
+import NginxIcon from "../assets/nginx.png";
+import YarnIcon from "../assets/yarn.png";
+
+import NodeIcon from "../assets/node.png";
+import DrupalIcon from "../assets/drupal.png";
+import GraphQLIcon from "../assets/graphql.png";
+
+
+
+// Deployment
+import GithubIcon from "../assets/github.png";
+
 // GithubIcon,
 // LinuxIcon,
 
-export const GRID_ICONS = [
+export const FRONTEND_GRID_ICONS = [
   // Row 1
   {
     icon: ReactIcon,
@@ -56,3 +71,45 @@ export const GRID_ICONS = [
     name: 'icons.webpack',
   },
 ];
+
+
+export const BACKEND_GRID_ICONS = [
+  {
+    icon: PHPIcon,
+    name: 'icons.php',
+  },
+  {
+    icon: RubyIcon,
+    name: 'icons.ruby',
+  },
+  {
+    icon: SpringIcon,
+    name: 'icons.spring',
+  },
+
+  {
+    icon: LinuxIcon,
+    name: 'icons.linux',
+  },
+  {
+    icon: NginxIcon,
+    name: 'icons.nginx',
+  },
+  {
+    icon: YarnIcon,
+    name: 'icons.yarn',
+  },
+
+  {
+    icon: NodeIcon,
+    name: 'icons.node',
+  },
+  {
+    icon: DrupalIcon,
+    name: 'icons.drupal',
+  },
+  {
+    icon: GraphQLIcon,
+    name: 'icons.graphql',
+  },
+]
