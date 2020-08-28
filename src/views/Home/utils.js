@@ -77,6 +77,12 @@ export const useStyles = makeStyles((theme) => {
       justifyContent: "center",
       alignItems: "center",
     },
+    timelinePaper: {
+      padding: "6px 16px",
+    },
+    secondaryTail: {
+      backgroundColor: theme.palette.secondary.main,
+    },
     /***
      * Content Specific
      */

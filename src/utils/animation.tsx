@@ -308,7 +308,8 @@ const useStyles = makeStyles({
     width: "33.33%",
     height: "33.33%",
     overflow: "hidden",
-    backgroundSize: `${TWEEN_IMAGE_BG_SIZE}px ${TWEEN_IMAGE_BG_SIZE}px`,
+    // backgroundSize: `${TWEEN_IMAGE_BG_SIZE}px ${TWEEN_IMAGE_BG_SIZE}px`,
+    backgroundSize: `300% 300%`,
   },
 });
 

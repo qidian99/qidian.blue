@@ -8,7 +8,7 @@ import { TimelineMax } from "gsap";
 import { Typography, Box } from "@material-ui/core";
 
 import { FadeInWithDelay } from "../../utils";
-import { useStyles, FADEOUT_TRIGGER, FADEOUT_THRESHOLD } from "./utils";
+import { useStyles, FADEOUT_THRESHOLD } from "./utils";
 
 export const IntroductionSection = ({ debug = true }) => {
   const classes = useStyles();
