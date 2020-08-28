@@ -104,4 +104,4 @@ export const useStyles = makeStyles((theme) => {
 
 
 export const FADEOUT_TRIGGER = 0.5;
-export const FADEOUT_THRESHOLD = (1 + FADEOUT_TRIGGER) / 2; // from threshold to 1, home animation progress from 1 to 0
+export const FADEOUT_THRESHOLD = 0.3; // from threshold to 1, home animation progress from 1 to 0

@@ -149,9 +149,3 @@ export const BackendSection = () => {
     </Fragment>
   );
 };
-
-export const ExperienceSection = () => {
-  useEffect(() => {}, []);
-  const [] = useTranslation("common");
-  return <MuiTimeline />;
-};
