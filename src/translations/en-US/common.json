@@ -71,6 +71,26 @@
 	},
 	"projects": {
 		"content": "Summary",
+		"experience": {
+			"ibm": {
+				"1_body": "Beijing, China",
+				"1_desc": "In the summer of my freshman year, I was an R&D intern at IBM CRL (China Research Lab)",
+				"1_time": "June 30th, 2018",
+				"1_title": "IBM CRL",
+				"2_body": "Bayesian network, time series analysis, root cause analysis",
+				"2_desc": "During the internship, I read dozens of articles on root cause analysis, time series data analysis, clustering, and Bayesian networks.",
+				"2_time": "During internship",
+				"2_title": "Literature review",
+				"3_body": "Use Python for modeling, Java for clustering, and Neo4j for data visualization",
+				"3_desc": "I designed and implemented an event grouping and reduction algorithm based on Bayesian network.",
+				"3_time": "July 15, 2018",
+				"3_title": "Algorithm design and implementation",
+				"4_body": "Exhibition and internal patent review",
+				"4_desc": "In the final stage of the internship, I designed an exhibition board to demonstrate my research to the entire laboratory and participate in internal patent review",
+				"4_time": "September 15, 2018",
+				"4_title": "End of internship"
+			}
+		},
 		"title": "Projects"
 	},
 	"resume": {

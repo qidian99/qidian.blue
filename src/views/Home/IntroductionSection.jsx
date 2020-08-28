@@ -6,6 +6,7 @@ import { SplitChars, Tween, Reveal, GsapControls, PlayState } from "react-gsap";
 import ScrollMagic from "ScrollMagic";
 import { TimelineMax } from "gsap";
 import { Typography, Box } from "@material-ui/core";
+import classNames from "classnames";
 
 import { FadeInWithDelay } from "../../utils";
 import { useStyles, FADEOUT_THRESHOLD } from "./utils";
@@ -75,46 +76,47 @@ export const IntroductionSection = ({ debug = true }) => {
   }, []);
 
   return (
-    <Fragment>
-      <section ref={rootRef} className={classes.introSection}>
-        <Box textAlign="center" position="relative">
-          <Typography
-            className={classes.splitText}
-            variant="h2"
-            color="textPrimary"
-            gutterBottom
-          >
-            <Fragment>
-              <Reveal trigger={<div />}>
-                <GsapControls ref={hiControlsRef}>
-                  <Tween
-                    from={{ opacity: 0, x: "-100vw" }}
-                    ease="power1.inOut"
-                    stagger={0.075}
+    <section
+      ref={rootRef}
+      className={classNames(classes.introSection, classes.selfCenter)}
+    >
+      <Box textAlign="center" position="relative">
+        <Typography
+          className={classes.splitText}
+          variant="h2"
+          color="textPrimary"
+          gutterBottom
+        >
+          <Fragment>
+            <Reveal trigger={<div />}>
+              <GsapControls ref={hiControlsRef}>
+                <Tween
+                  from={{ opacity: 0, x: "-100vw" }}
+                  ease="power1.inOut"
+                  stagger={0.075}
+                >
+                  <SplitChars
+                    wrapper={<span style={{ display: "inline-block" }} />}
                   >
-                    <SplitChars
-                      wrapper={<span style={{ display: "inline-block" }} />}
-                    >
-                      {t("home.prompt")}
-                    </SplitChars>
-                  </Tween>
-                </GsapControls>
-              </Reveal>
-            </Fragment>
-          </Typography>
-        </Box>
-        {/* <Reveal trigger={<div />}> */}
-        <GsapControls ref={introControlsRef}>
-          <FadeInWithDelay delay={1.2}>
-            <Box position="relative" className={classes.content}>
-              <Typography variant="h3" color="textPrimary" align="center">
-                {t("home.intro_general")}
-              </Typography>
-            </Box>
-          </FadeInWithDelay>
-        </GsapControls>
-        {/* </Reveal> */}
-      </section>
-    </Fragment>
+                    {t("home.prompt")}
+                  </SplitChars>
+                </Tween>
+              </GsapControls>
+            </Reveal>
+          </Fragment>
+        </Typography>
+      </Box>
+      {/* <Reveal trigger={<div />}> */}
+      <GsapControls ref={introControlsRef}>
+        <FadeInWithDelay delay={1.2}>
+          <Box position="relative" className={classes.content}>
+            <Typography variant="h3" color="textPrimary" align="center">
+              {t("home.intro_general")}
+            </Typography>
+          </Box>
+        </FadeInWithDelay>
+      </GsapControls>
+      {/* </Reveal> */}
+    </section>
   );
 };

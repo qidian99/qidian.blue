@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => {
       flex: "0 1 auto",
     },
     remainder: {
-      flex: "1 1 auto",
+      // flex: "1 1 auto",
+      // justifyContent: 'flex-start',
     },
     panel: {
       overflowY: "scroll",

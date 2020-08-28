@@ -50,6 +50,15 @@ export const useStyles = makeStyles((theme) => {
     darkBG: {
       backgroundColor: theme.palette.primary.dark,
     },
+    flex: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    selfCenter: {
+      justifySelf: 'center',
+    },
     /***
      * MUI and other widgets
      */
@@ -100,7 +109,10 @@ export const useStyles = makeStyles((theme) => {
         opacity: 0.6,
       },
     },
-    frontendSection: {},
+    frontendSection: {
+    },
+    backendSection: {
+    },
     image: {
       width: 128,
       height: 128,

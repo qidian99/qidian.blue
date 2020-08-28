@@ -25,7 +25,7 @@ export const Home = () => (
       IntroductionSection,
       FrontendSection,
       BackendSection,
-      ExperienceSection,
+      // ExperienceSection,
     ]}
   />
 );

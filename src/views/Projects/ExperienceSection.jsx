@@ -1,12 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useCallback, useState } from "preact/hooks";
+import {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useContext,
+} from "preact/hooks";
 import { Fragment } from "preact";
 import { Reveal } from "react-gsap";
 import {} from "../../utils";
-import { useStyles } from "./utils";
 import { makeStyles, Paper, Typography, Grid, Box } from "@material-ui/core";
-
-
 
 import Timeline from "@material-ui/lab/Timeline";
 import TimelineItem from "@material-ui/lab/TimelineItem";
@@ -22,58 +25,170 @@ import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import HotelIcon from "@material-ui/icons/Hotel";
 import RepeatIcon from "@material-ui/icons/Repeat";
 import ScrollMagic from "ScrollMagic";
-import { TimelineMax } from "gsap";
+import { gsap } from "gsap";
+import classNames from "classnames";
+import Panel from "../../components/Panel";
+import { MyContext } from "../../store/context";
 
-const T_PRE = "home.experience";
+const T_PRE = "projects.experience";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    primaryBG: {
+      backgroundColor: theme.palette.text.main,
+    },
+    lightBG: {
+      backgroundColor: theme.palette.primary.light,
+    },
+    darkBG: {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    scrollY: {
+      // overflowY: "scroll",
+    },
+    offset: {
+      // marginTop: 64,
+    },
+    /***
+     * MUI and other widgets
+     */
+    paper: {
+      padding: theme.spacing(2),
+      margin: "auto",
+      maxWidth: 500,
+    },
+    timelinePaper: {
+      padding: "6px 16px",
+    },
+    secondaryTail: {
+      backgroundColor: theme.palette.secondary.main,
+    },
+    /**
+     * Detailed sections
+     */
+    projectGrid: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      bottom: 0,
+      left: 0,
+    },
+    projectTimeline: {},
+    projectDescription: {},
+    descriptionWrapper: {
+      position: "absolute",
+    },
+    description: {},
+  };
+});
 
 export const ExperienceSection = () => {
   const [t] = useTranslation("common");
 
+  const {
+    store: { theme, language },
+  } = useContext(MyContext);
+
   const classes = useStyles();
 
+  const scrollRef = useRef(null);
   const rootRef = useRef(null);
   const tlRefs = useRef(Array(4).fill(null));
-  const setRef = useCallback(
+  const textRefs = useRef(Array(4).fill(null));
+  const setTlRef = useCallback(
     (index) => (ref) => {
       tlRefs.current[index] = ref;
     },
     []
   );
+  const setTextRef = useCallback(
+    (index) => (ref) => {
+      textRefs.current[index] = ref;
+    },
+    []
+  );
 
-  const [controller] = useState(new ScrollMagic.Controller());
-  const [animation] = useState(new TimelineMax());
+  const [offset] = useState(
+    window.innerHeight || document.documentElement.clientHeight
+  );
+  const controllerRef = useRef(new ScrollMagic.Controller());
+  const [animation] = useState(new gsap.timeline());
 
-  // useEffect(() => {
-  //   const root = rootRef.current;
-  //   const tls = tlRefs.current;
+  useEffect(() => {
+    const controller = controllerRef.current;
+    const scroll = scrollRef.current;
+    const root = rootRef.current;
+    const tls = tlRefs.current;
+    const texts = textRefs.current;
 
-  //   tls.forEach((tl) => {
-  //     console.log(tl);
-  //   });
+    tls.forEach((tl, i) => {
+      const id = "show" + i;
+      animation
+        .from(
+          tl,
+          1,
+          {
+            opacity: 0,
+          },
+          id
+        )
+        .from(
+          texts[i],
+          0.6,
+          {
+            delay: 0.4 ,
+            opacity: 0,
+          },
+          "<"
+        );
 
-  //   animation.fromTo(tls[0], '30%', {
-  //     opacity: 0,
-  //   }, {
-  //     opacity: 1,
-  //   }, 0);
+      if (i >= 1) {
+        animation.to(
+          texts[i - 1],
+          0.4,
+          {
+            delay: 0,
+            opacity: 0,
+          },
+          id
+        );
+      }
+    });
 
-  //   const scene = new ScrollMagic.Scene({
-  //     duration: "100%",
-  //     triggerElement: root,
-  //     triggerHook: "onLeave",
-  //   })
-  //     .setPin(root)
-  //     .setTween(animation)
-  //     .addIndicators()
-  //     .addTo(controller);
-  // }, []);
+    const scene = new ScrollMagic.Scene({
+      duration: "300%",
+      triggerElement: root,
+      offset,
+      triggerHook: 1,
+      // triggerHook: 64 / window.innerHeight,
+    })
+      // .setPin(scroll)
+      .setTween(animation)
+      .addIndicators()
+      .addTo(controller);
+
+    return () => {
+      console.log("cleaning up scene in experience section");
+    };
+  }, []);
 
   return (
-    <Box ref={rootRef}>
-      <Grid container display="flex">
-        <Grid item xs={6}>
+    <Box
+      width="100%"
+      height="100%"
+      className={classNames(classes.scrollY)}
+      ref={rootRef}
+    >
+      <Grid
+        className={classNames(classes.lightBG, classes.projectGrid)}
+        container
+        display="flex"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid className={classes.projectTimeline} item xs sm={6}>
           <Timeline align="alternate">
-            <TimelineItem ref={setRef(0)}>
+            <TimelineItem ref={setTlRef(0)}>
               <TimelineOppositeContent>
                 <Typography variant="body2" color="textSecondary">
                   {t(`${T_PRE}.ibm.1_time`)}
@@ -94,7 +209,7 @@ export const ExperienceSection = () => {
                 </Paper>
               </TimelineContent>
             </TimelineItem>
-            <TimelineItem ref={setRef(1)}>
+            <TimelineItem ref={setTlRef(1)}>
               <TimelineOppositeContent>
                 <Typography variant="body2" color="textSecondary">
                   {t(`${T_PRE}.ibm.2_time`)}
@@ -115,7 +230,7 @@ export const ExperienceSection = () => {
                 </Paper>
               </TimelineContent>
             </TimelineItem>
-            <TimelineItem ref={setRef(2)}>
+            <TimelineItem ref={setTlRef(2)}>
               <TimelineOppositeContent>
                 <Typography variant="body2" color="textSecondary">
                   {t(`${T_PRE}.ibm.3_time`)}
@@ -136,7 +251,7 @@ export const ExperienceSection = () => {
                 </Paper>
               </TimelineContent>
             </TimelineItem>
-            <TimelineItem ref={setRef(3)}>
+            <TimelineItem ref={setTlRef(3)}>
               <TimelineOppositeContent>
                 <Typography variant="body2" color="textSecondary">
                   {t(`${T_PRE}.ibm.4_time`)}
@@ -158,19 +273,32 @@ export const ExperienceSection = () => {
             </TimelineItem>
           </Timeline>
         </Grid>
-        <Grid item xs={6}>
+        <Grid className={classes.projectDescription} item xs sm={6}>
           <Box
             height="100%"
             display="flex"
             justifyContent="center"
             alignItems="center"
+            position="relative"
           >
-            <Typography variant="h5" color="textPrimary">
-              {t(`${T_PRE}.ibm.1_desc`)}
-            </Typography>
+            {textRefs.current.map((_, i) => (
+              <div className={classes.descriptionWrapper} ref={setTextRef(i)}>
+                <div className={classes.description}>
+                  <Typography variant="h5" color="textPrimary">
+                    {t(`${T_PRE}.ibm.${i + 1}_desc`)}
+                  </Typography>
+                </div>
+              </div>
+            ))}
           </Box>
         </Grid>
       </Grid>
+      <Box
+        width="100%"
+        height="100%"
+        className={classNames(classes.offset)}
+        ref={scrollRef}
+      ></Box>
     </Box>
   );
 };
