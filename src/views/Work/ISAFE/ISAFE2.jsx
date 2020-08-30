@@ -20,11 +20,12 @@ import { CutText, FadeIn } from "../../../utils";
 import { Typography } from "@material-ui/core";
 import { MyContext } from "../../../store/context";
 import DefaultImage from "../../../assets/its.png";
-import Image1 from "../../../assets/legacy/campus_mobile.png";
-import Image2 from "../../../assets/its_jira.png";
-import Image3 from "../../../assets/its_figma.png";
-import Image4 from "../../../assets/its_wso2.png";
-import Image5 from "../../../assets/its_figma2.png";
+import Image0 from "../../../assets/isafe_web_0.png";
+import Image1 from "../../../assets/isafe_web_1.png";
+import Image3 from "../../../assets/isafe_web_3.png";
+import Image4 from "../../../assets/isafe_web_4.png";
+import Image5 from "../../../assets/isafe_web_5.png";
+
 
 const T_PRE = "work.isafe2";
 
@@ -51,11 +52,9 @@ const getIcon = (i) => {
 const getImage = (i) => {
   switch (i) {
     case 0:
-      return Image1;
+      return Image0;
     case 1:
-      return null;
-    case 2:
-      return Image2;
+      return Image1;
     case 3:
       return Image3;
     case 4:
@@ -71,7 +70,7 @@ const getImage = (i) => {
 const getImageHeight = (i) => {
   switch (i) {
     case 3:
-    case 5:
+    case 4:
       return 600;
     default:
       return 300;
