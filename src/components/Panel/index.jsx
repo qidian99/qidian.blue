@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexFlow: "column",
       position: "absolute", // panels should be absolute when they shift in
-      backgroundColor: theme.palette.primary.light,
+      // backgroundColor: theme.palette.primary.light,
     },
   };
 });

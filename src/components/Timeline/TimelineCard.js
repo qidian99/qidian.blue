@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: '40vw',
+    // maxWidth: '40vw',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',

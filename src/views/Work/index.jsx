@@ -10,15 +10,22 @@ import Panel from "../../components/Panel";
 
 import React from "preact/compat";
 import { MyContext } from "../../store/context";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Box } from "@material-ui/core";
 
 const T_PRE = "projects";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.primary.light,
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
   grid: {
     overflowY: "scroll",
+    maxHeight: '90vh',
   },
-});
+}));
 
 const Projects = () => {
   const [t] = useTranslation("common");
@@ -40,119 +47,126 @@ const Projects = () => {
   ));
 
   return (
-    <Panel>
-      <Grid className={classes.grid} container spacing={6} justify="flex-start">
+    <Panel spacing={0}>
+      <Box p={6} className={classes.root}>
         <Grid
-          item
+          className={classes.grid}
           container
-          justify="center"
-          alignItems="center"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
+          spacing={6}
+          justify="flex-start"
         >
-          <WorkCard
-            link={ibmLink}
-            height="100%"
-            title={t(`${T_PRE}.isafe3.title`)}
-            body={t(`${T_PRE}.isafe3.body`)}
-            image={ISAFEImage}
-            shareButtonText={t2("button.share")}
-            redirectButtonText={t2("button.more")}
-            ShareLink={ISAFEShareLink}
-            RedirectLink={ISAFEShareLink}
-          />
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <WorkCard
+              link={ibmLink}
+              height="100%"
+              title={t(`${T_PRE}.isafe3.title`)}
+              body={t(`${T_PRE}.isafe3.body`)}
+              image={ISAFEImage}
+              shareButtonText={t2("button.share")}
+              redirectButtonText={t2("button.more")}
+              ShareLink={ISAFEShareLink}
+              RedirectLink={ISAFEShareLink}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <WorkCard
+              link={ibmLink}
+              height="100%"
+              title={t(`${T_PRE}.isafe2.title`)}
+              body={t(`${T_PRE}.isafe2.body`)}
+              image={ISAFEImage}
+              shareButtonText={t2("button.share")}
+              redirectButtonText={t2("button.more")}
+              ShareLink={ISAFEShareLink}
+              RedirectLink={ISAFEShareLink}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <WorkCard
+              link={ibmLink}
+              height="100%"
+              title={t(`${T_PRE}.isafe.title`)}
+              body={t(`${T_PRE}.isafe.body`)}
+              image={ISAFEImage}
+              shareButtonText={t2("button.share")}
+              redirectButtonText={t2("button.more")}
+              ShareLink={ISAFEShareLink}
+              RedirectLink={ISAFEShareLink}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <WorkCard
+              link={ibmLink}
+              height="100%"
+              title={t(`${T_PRE}.ibm.title`)}
+              body={t(`${T_PRE}.ibm.body`)}
+              image={IBMImage}
+              shareButtonText={t2("button.share")}
+              redirectButtonText={t2("button.more")}
+              ShareLink={IBMShareLink}
+              RedirectLink={IBMShareLink}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            justify="center"
+            alignItems="center"
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <WorkCard
+              link={ibmLink}
+              height="100%"
+              title={t(`${T_PRE}.its.title`)}
+              body={t(`${T_PRE}.its.body`)}
+              image={ITSImage}
+              shareButtonText={t2("button.share")}
+              redirectButtonText={t2("button.more")}
+              ShareLink={ISAFEShareLink}
+              RedirectLink={ISAFEShareLink}
+            />
+          </Grid>
         </Grid>
-        <Grid
-          item
-          container
-          justify="center"
-          alignItems="center"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-        >
-          <WorkCard
-            link={ibmLink}
-            height="100%"
-            title={t(`${T_PRE}.isafe2.title`)}
-            body={t(`${T_PRE}.isafe2.body`)}
-            image={ISAFEImage}
-            shareButtonText={t2("button.share")}
-            redirectButtonText={t2("button.more")}
-            ShareLink={ISAFEShareLink}
-            RedirectLink={ISAFEShareLink}
-          />
-        </Grid>
-        <Grid
-          item
-          container
-          justify="center"
-          alignItems="center"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-        >
-          <WorkCard
-            link={ibmLink}
-            height="100%"
-            title={t(`${T_PRE}.isafe.title`)}
-            body={t(`${T_PRE}.isafe.body`)}
-            image={ISAFEImage}
-            shareButtonText={t2("button.share")}
-            redirectButtonText={t2("button.more")}
-            ShareLink={ISAFEShareLink}
-            RedirectLink={ISAFEShareLink}
-          />
-        </Grid>
-        <Grid
-          item
-          container
-          justify="center"
-          alignItems="center"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-        >
-          <WorkCard
-            link={ibmLink}
-            height="100%"
-            title={t(`${T_PRE}.ibm.title`)}
-            body={t(`${T_PRE}.ibm.body`)}
-            image={IBMImage}
-            shareButtonText={t2("button.share")}
-            redirectButtonText={t2("button.more")}
-            ShareLink={IBMShareLink}
-            RedirectLink={IBMShareLink}
-          />
-        </Grid>
-        <Grid
-          item
-          container
-          justify="center"
-          alignItems="center"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-        >
-          <WorkCard
-            link={ibmLink}
-            height="100%"
-            title={t(`${T_PRE}.its.title`)}
-            body={t(`${T_PRE}.its.body`)}
-            image={ITSImage}
-            shareButtonText={t2("button.share")}
-            redirectButtonText={t2("button.more")}
-            ShareLink={ISAFEShareLink}
-            RedirectLink={ISAFEShareLink}
-          />
-        </Grid>
-      </Grid>
+      </Box>
     </Panel>
   );
 };
