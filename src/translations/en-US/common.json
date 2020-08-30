@@ -85,10 +85,22 @@
 				"3_desc": "I designed and implemented an event grouping and reduction algorithm based on Bayesian network.",
 				"3_time": "July 15, 2018",
 				"3_title": "Algorithm design and implementation",
-				"4_body": "Exhibition and internal patent review",
-				"4_desc": "In the final stage of the internship, I designed an exhibition board to demonstrate my research to the entire laboratory and participate in internal patent review",
-				"4_time": "September 15, 2018",
-				"4_title": "End of internship"
+				"4_body": "Exhibition in IBM lab",
+				"4_desc": "Based on the literature reading and trained model, I made an exhibition board and demoed it to the whole laboratory",
+				"4_time": "September 1, 2018",
+				"4_title": "IBM Lab Exhibition",
+				"5_body": "Causality-Based Event Grouping and Reduction Model",
+				"5_desc": "In the final stage of the internship, I summed up the results into a pitch and participated in internal patent review",
+				"5_time": "September 15, 2018",
+				"5_title": "Internal patent review",
+				"6_body": "Preliminary patent was rated as \"Search\"",
+				"6_desc": "Preliminary patents are assessed as \"Search\", the highest level",
+				"6_time": "September 15, 2018",
+				"6_title": "Patent review result",
+				"7_body": "Exhibition and internal patent review",
+				"7_desc": "In the final stage of the internship, I designed an exhibition board to demonstrate my research to the entire laboratory and participate in internal patent review",
+				"7_time": "September 15, 2018",
+				"7_title": "End of internship"
 			}
 		},
 		"title": "Projects"

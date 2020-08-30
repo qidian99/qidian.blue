@@ -128,11 +128,15 @@ export const CutText = ({
   children,
   numberSlices = 4,
   type = 0,
+  fill = "#000",
+  fontSize = 80,
   ...rest
 }: {
   children: string;
   numberSlices?: number;
   type?: number;
+  fill?: string;
+  fontSize?: number;
   [key: string]: any;
 }) => {
   const textRef = useRef<SVGTextElement>(null);
@@ -170,8 +174,8 @@ export const CutText = ({
             x="0"
             y={-viewBox.y}
             textAnchor="left"
-            fontSize="80"
-            fill="#000"
+            fontSize={fontSize}
+            fill={fill}
           >
             {children}
           </text>
@@ -179,19 +183,15 @@ export const CutText = ({
       </defs>
       <Timeline
         wrapper={<g fill="url(#cutPattern)" />}
-        target={
-          // <React.Fragment>
-          Array.from({ length: numberSlices }).map((_, index) => (
-            <rect
-              key={index}
-              x="0"
-              y={index * sliceHeight}
-              width={viewBox.width}
-              height={sliceHeight + 1}
-            />
-          ))
-          // </React.Fragment>
-        }
+        target={Array.from({ length: numberSlices }).map((_, index) => (
+          <rect
+            key={index}
+            x="0"
+            y={index * sliceHeight}
+            width={viewBox.width}
+            height={sliceHeight + 1}
+          />
+        ))}
         {...rest}
       >
         {type === 0 && (
