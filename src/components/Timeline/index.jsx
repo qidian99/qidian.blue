@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => {
       left: 0,
       bottom: 0,
       left: 0,
+      padding: '2.5em',
     },
     projectTimeline: {
       maxHeight: "60vh",
@@ -258,6 +259,14 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
         )
         .from(
           texts[i],
+          0,
+          {
+            display: 'none',
+          },
+          showLabel
+        )
+        .from(
+          texts[i],
           i === 0 ? 1 : FADE_IN_DURATION,
           {
             delay: i === 0 ? 0 : FADE_IN_DELAY,
@@ -388,11 +397,18 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
             alignItems="center"
             position="relative"
           >
-            {timelineItems.map(({ description, image, imageHeight }, i) => {
+            {timelineItems.map(({ description, image, imageHeight, alt }, i) => {
               let desc;
 
               if (image) {
-                desc = <TimelineCard title={description} image={image} imageHeight={imageHeight} />;
+                desc = (
+                  <TimelineCard
+                    title={description}
+                    alt={alt}
+                    image={image}
+                    imageHeight={imageHeight}
+                  />
+                );
               } else {
                 desc = (
                   <div className={classes.description}>

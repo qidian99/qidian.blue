@@ -43,7 +43,7 @@ export default function ImgMediaCard({
 
   return (
     <Card className={classes.root} {...(height ? { style: { height } } : {})}>
-      <CardActionArea href={link}>
+      <CardActionArea component={RedirectLink}>
         <CardMedia
           component="img"
           height={imageHeight}
@@ -62,11 +62,11 @@ export default function ImgMediaCard({
       </CardActionArea>
       <div className={classes.separator}></div>
       <CardActions>
-        <Button size="small" color="secondary" component={ShareLink}>
+        {/* <Button size="small" color="secondary" component={ShareLink}>
           <Typography color="textSecondary">
             {shareButtonText}
           </Typography>
-        </Button>
+        </Button> */}
         <Button size="small" color="secondary" component={RedirectLink}>
           <Typography color="textSecondary">
             {redirectButtonText}

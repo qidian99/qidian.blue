@@ -117,6 +117,18 @@ const App = () => {
 									<Route exact path="routes.ibm">
 										<views.IBM />
 									</Route>
+									<Route exact path="routes.its">
+										<views.ITS />
+									</Route>
+									<Route exact path="routes.isafe1">
+										<views.ISAFE1 />
+									</Route>
+									<Route exact path="routes.isafe2">
+										<views.ISAFE2 />
+									</Route
+									><Route exact path="routes.isafe3">
+										<views.ISAFE3 />
+									</Route>
 									<Route path="*">
 										<views.GeneralError />
 									</Route>

@@ -12,7 +12,7 @@ import React from "preact/compat";
 import { MyContext } from "../../store/context";
 import { Grid, makeStyles, Box } from "@material-ui/core";
 
-const T_PRE = "projects";
+const T_PRE = "work";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,14 +37,25 @@ const Projects = () => {
   const classes = useStyles();
 
   const ibmLink = `/${locale}${t("routes.ibm")}`;
-  const isafeLink = `/${locale}${t("routes.isafe")}`;
+  const isafeLink1 = `/${locale}${t("routes.isafe1")}`;
+  const isafeLink2 = `/${locale}${t("routes.isafe2")}`;
+  const isafeLink3 = `/${locale}${t("routes.isafe3")}`;
+  const itsLink = `/${locale}${t("routes.its")}`;
   const IBMShareLink = React.forwardRef((props, ref) => (
     <Link ref={ref} to={ibmLink} {...props} />
   ));
-
-  const ISAFEShareLink = React.forwardRef((props, ref) => (
-    <Link ref={ref} to={isafeLink} {...props} />
+  const ISAFEShareLink1 = React.forwardRef((props, ref) => (
+    <Link ref={ref} to={isafeLink1} {...props} />
   ));
+  const ISAFEShareLink2 = React.forwardRef((props, ref) => (
+    <Link ref={ref} to={isafeLink2} {...props} />
+  ));
+  const ISAFEShareLink3 = React.forwardRef((props, ref) => (
+    <Link ref={ref} to={isafeLink3} {...props} />
+  ));
+   const ITSShareLink = React.forwardRef((props, ref) => (
+     <Link ref={ref} to={itsLink} {...props} />
+   ));
 
   return (
     <Panel spacing={0}>
@@ -66,15 +77,15 @@ const Projects = () => {
             lg={3}
           >
             <WorkCard
-              link={ibmLink}
+              link={isafeLink3}
               height="100%"
               title={t(`${T_PRE}.isafe3.title`)}
               body={t(`${T_PRE}.isafe3.body`)}
               image={ISAFEImage}
               shareButtonText={t2("button.share")}
               redirectButtonText={t2("button.more")}
-              ShareLink={ISAFEShareLink}
-              RedirectLink={ISAFEShareLink}
+              ShareLink={ISAFEShareLink3}
+              RedirectLink={ISAFEShareLink3}
             />
           </Grid>
           <Grid
@@ -88,15 +99,15 @@ const Projects = () => {
             lg={3}
           >
             <WorkCard
-              link={ibmLink}
+              link={isafeLink2}
               height="100%"
               title={t(`${T_PRE}.isafe2.title`)}
               body={t(`${T_PRE}.isafe2.body`)}
               image={ISAFEImage}
               shareButtonText={t2("button.share")}
               redirectButtonText={t2("button.more")}
-              ShareLink={ISAFEShareLink}
-              RedirectLink={ISAFEShareLink}
+              ShareLink={ISAFEShareLink2}
+              RedirectLink={ISAFEShareLink2}
             />
           </Grid>
           <Grid
@@ -110,15 +121,15 @@ const Projects = () => {
             lg={3}
           >
             <WorkCard
-              link={ibmLink}
+              link={isafeLink1}
               height="100%"
-              title={t(`${T_PRE}.isafe.title`)}
-              body={t(`${T_PRE}.isafe.body`)}
+              title={t(`${T_PRE}.isafe1.title`)}
+              body={t(`${T_PRE}.isafe1.body`)}
               image={ISAFEImage}
               shareButtonText={t2("button.share")}
               redirectButtonText={t2("button.more")}
-              ShareLink={ISAFEShareLink}
-              RedirectLink={ISAFEShareLink}
+              ShareLink={ISAFEShareLink1}
+              RedirectLink={ISAFEShareLink1}
             />
           </Grid>
           <Grid
@@ -154,15 +165,15 @@ const Projects = () => {
             lg={3}
           >
             <WorkCard
-              link={ibmLink}
+              link={itsLink}
               height="100%"
               title={t(`${T_PRE}.its.title`)}
               body={t(`${T_PRE}.its.body`)}
               image={ITSImage}
               shareButtonText={t2("button.share")}
               redirectButtonText={t2("button.more")}
-              ShareLink={ISAFEShareLink}
-              RedirectLink={ISAFEShareLink}
+              ShareLink={ITSShareLink}
+              RedirectLink={ITSShareLink}
             />
           </Grid>
         </Grid>
