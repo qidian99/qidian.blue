@@ -31,6 +31,8 @@ import classNames from "classnames";
 import Panel from "../Panel";
 import { MyContext } from "../../store/context";
 import { getTimelineHeight, FADE_IN_DELAY, FADE_IN_DURATION } from "./config";
+import TimelineCard from "./TimelineCard";
+
 const T_PRE = "projects.experience";
 const TITLE_FADEOUT_DURATION = 20;
 
@@ -58,9 +60,9 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: theme.palette.primary.dark,
     },
     root: {
-      width: "100vw",
+      width: "100%",
       height: "100vh",
-      // overflowY: "scroll",
+      // overflowX: "hidden",
     },
     offset: {
       // marginTop: 64,
@@ -318,26 +320,26 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
         alignItems="center"
       >
         <div ref={titleRef}>
-        <Reveal
-          ref={function (r) {
-            console.log(r);
-          }}
-          repeat
-          trigger={<div className={classes.splitText} />}
-        >
-          <CutText
-            type={0}
-            numberSlices={8}
-            duration={2}
-            fill={theme.palette.text.primary}
-            fontSize={48}
+          <Reveal
+            // ref={function (r) {
+            //   console.log(r);
+            // }}
+            repeat
+            trigger={<div className={classes.splitText} />}
           >
-            {title}
-          </CutText>
-        </Reveal>
+            <CutText
+              type={0}
+              numberSlices={8}
+              duration={1.2}
+              fill={theme.palette.text.primary}
+              fontSize={48}
+            >
+              {title}
+            </CutText>
+          </Reveal>
         </div>
 
-        <Grid className={classes.projectTimeline} item xs sm={6}>
+        <Grid className={classes.projectTimeline} item xs={12} sm={6}>
           <Timeline
             style={{ visibility: "hidden" }}
             ref={timelineRef}
@@ -353,7 +355,7 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
                 >
                   <TimelineOppositeContent>
                     <Typography variant="body2" color="textSecondary">
-                      {t(time)}
+                      {time}
                     </Typography>
                   </TimelineOppositeContent>
                   <TimelineSeparator>
@@ -365,9 +367,9 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
                   <TimelineContent>
                     <Paper elevation={3} className={classes.timelinePaper}>
                       <Typography variant="h6" component="h1">
-                        {t(topic)}
+                        {topic}
                       </Typography>
-                      <Typography>{t(body)}</Typography>
+                      <Typography>{body}</Typography>
                     </Paper>
                   </TimelineContent>
                 </TimelineItem>
@@ -375,7 +377,7 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
             })}
           </Timeline>
         </Grid>
-        <Grid className={classes.projectDescription} item xs sm={6}>
+        <Grid className={classes.projectDescription} item xs={12} sm={6}>
           <Box
             m={5}
             ref={descriptionRef}
@@ -386,15 +388,26 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
             alignItems="center"
             position="relative"
           >
-            {timelineItems.map(({ description }, i) => (
-              <div className={classes.descriptionWrapper} ref={setTextRef(i)}>
-                <div className={classes.description}>
-                  <Typography variant="h5" color="textPrimary">
-                    {t(description)}
-                  </Typography>
+            {timelineItems.map(({ description, image, imageHeight }, i) => {
+              let desc;
+
+              if (image) {
+                desc = <TimelineCard title={description} image={image} imageHeight={imageHeight} />;
+              } else {
+                desc = (
+                  <div className={classes.description}>
+                    <Typography variant="h5" color="textPrimary">
+                      {description}
+                    </Typography>
+                  </div>
+                );
+              }
+              return (
+                <div className={classes.descriptionWrapper} ref={setTextRef(i)}>
+                  {desc}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Box>
         </Grid>
       </Grid>

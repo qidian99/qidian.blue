@@ -41,7 +41,6 @@ export const LocalizedSwitch = ({ children }) => {
         return undefined;
       case "object":
         return path.map((key) => {
-          console.log("key", key);
           return `/${locale}` + t(key);
         });
       default:

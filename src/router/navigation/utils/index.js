@@ -2,6 +2,7 @@ import { AppRoute, AppRouteTitles } from "../../const";
 import HomeIcon from "@material-ui/icons/Home";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import WorkIcon from "@material-ui/icons/WorkOutline";
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
 
 export const getDrawerIcon = (elem) => {
@@ -12,10 +13,13 @@ export const getDrawerIcon = (elem) => {
       return (<HomeIcon />)
     }
     case AppRoute.Projects: {
-      return (<WorkIcon />)
+      return (<MeetingRoomIcon />)
     }
     case AppRoute.Resume: {
       return (<AccountCircle />)
+    }
+    case AppRoute.Work: {
+      return (<WorkIcon />)
     }
   }
 }

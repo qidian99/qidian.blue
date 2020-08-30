@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => {
       // justifyContent: 'flex-start',
     },
     panel: {
-      overflowY: "scroll",
+      overflowY: "hidden",
       height: "100%",
       width: "100%",
       display: "flex",
       flexFlow: "column",
       position: "absolute", // panels should be absolute when they shift in
+      backgroundColor: theme.palette.primary.light,
     },
   };
 });
