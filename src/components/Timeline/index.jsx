@@ -64,9 +64,7 @@ const useStyles = makeStyles((theme) => {
       height: "100vh",
       // overflowX: "hidden",
     },
-    offset: {
-      // marginTop: 64,
-    },
+    offset: theme.mixins.toolbar,
     /***
      * MUI and other widgets
      */
@@ -90,7 +88,7 @@ const useStyles = makeStyles((theme) => {
       left: 0,
       bottom: 0,
       left: 0,
-      padding: '2.5em',
+      padding: "0 1.5em",
     },
     projectTimeline: {
       maxHeight: "60vh",
@@ -122,7 +120,12 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const CustomTimeline = ({ timelineItems, debug = false, title }) => {
+const CustomTimeline = ({
+  timelineItems,
+  debug = false,
+  title,
+  toolbar = true,
+}) => {
   const [t] = useTranslation("common");
 
   const { store } = useContext(MyContext);
@@ -261,7 +264,7 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
           texts[i],
           0,
           {
-            display: 'none',
+            display: "none",
           },
           showLabel
         )
@@ -322,13 +325,15 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
       ref={rootRef}
     >
       <Grid
+        style={{ padding: toolbar ? "64px 1.5em 0" : "0 1.5em" }}
         className={classNames(classes.lightBG, classes.projectGrid)}
         container
         display="flex"
         justify="center"
         alignItems="center"
       >
-        <div ref={titleRef}>
+        {/* {toolbar && <Box className={classes.offset} />} */}
+        <div ref={titleRef} style={{ marginBottom: toolbar ? "64px" : 0 }}>
           <Reveal
             // ref={function (r) {
             //   console.log(r);
@@ -397,33 +402,38 @@ const CustomTimeline = ({ timelineItems, debug = false, title }) => {
             alignItems="center"
             position="relative"
           >
-            {timelineItems.map(({ description, image, imageHeight, alt }, i) => {
-              let desc;
+            {timelineItems.map(
+              ({ description, image, imageHeight, alt }, i) => {
+                let desc;
 
-              if (image) {
-                desc = (
-                  <TimelineCard
-                    title={description}
-                    alt={alt}
-                    image={image}
-                    imageHeight={imageHeight}
-                  />
-                );
-              } else {
-                desc = (
-                  <div className={classes.description}>
-                    <Typography variant="h5" color="textPrimary">
-                      {description}
-                    </Typography>
+                if (image) {
+                  desc = (
+                    <TimelineCard
+                      title={description}
+                      alt={alt}
+                      image={image}
+                      imageHeight={imageHeight}
+                    />
+                  );
+                } else {
+                  desc = (
+                    <div className={classes.description}>
+                      <Typography variant="h5" color="textPrimary">
+                        {description}
+                      </Typography>
+                    </div>
+                  );
+                }
+                return (
+                  <div
+                    className={classes.descriptionWrapper}
+                    ref={setTextRef(i)}
+                  >
+                    {desc}
                   </div>
                 );
               }
-              return (
-                <div className={classes.descriptionWrapper} ref={setTextRef(i)}>
-                  {desc}
-                </div>
-              );
-            })}
+            )}
           </Box>
         </Grid>
       </Grid>
