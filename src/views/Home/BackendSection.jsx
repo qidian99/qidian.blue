@@ -34,7 +34,7 @@ export const BackendSection = () => {
         justify="center"
         alignItems="center"
       >
-        <Grid item xs={6} style={{ maxWidth: "unset" }}>
+        <Grid item xs={12} md={6}>
           <Reveal repeat>
             <FadeIn duration={2}>
               <Typography variant="h4" color="textPrimary" align="center">
@@ -43,7 +43,7 @@ export const BackendSection = () => {
             </FadeIn>
           </Reveal>
         </Grid>
-        <Grid item xs={6} style={{ maxWidth: "unset" }}>
+        <Grid item xs={12} md={6}>
           <Reveal
             repeat
             trigger={

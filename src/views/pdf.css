@@ -14,6 +14,9 @@
   line-height: initial;
 }
 
+.react-pdf__Page__annotations {
+  display: none;
+}
 /*
 .react-pdf__Page.pdf-page {
   display: flex;

@@ -168,7 +168,7 @@ const Projects = () => {
             const avatar = getProjectAvatar(index);
             return (
               <Grid container justify="center" item xs={12} sm={12}>
-                <Box width="100%" p={6} display="flex" justifyContent="center">
+                <Box width="100%" p={6} {...(i % 2 == 1 ? { style: { padding: 0 } } : {})} display="flex" justifyContent="center">
                   <ProjectCard
                     avatar={avatar}
                     title={title}
