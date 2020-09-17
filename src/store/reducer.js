@@ -18,7 +18,8 @@ export function reducer(state, action) {
   }
 }
 
-export const defaultLanguage = 'zhCN'
+// export const defaultLanguage = 'zhCN'
+export const defaultLanguage = 'enUS'
 export const defaultTheme = 'dark'
 
 export const initialState = {

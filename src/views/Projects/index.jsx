@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => {
     offset: theme.mixins.toolbar,
     root: {
       width: '100%',
-      maxWidth: '50vw',
+      maxWidth: '80vw',
       // maxWidth: 345,
     },
     media: {
