@@ -9,22 +9,8 @@ import { makeStyles } from "@material-ui/core";
 import { MyContext } from "../store/context";
 import './pdf.css';
 
-export const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles((theme) => {
   return {
-    /***
-     * General Layout
-     */
-    root: {
-      position: "relative", // the outer most containers should be relatively positioned
-      top: 0,
-    },
-    container: {
-      backgroundColor: theme.palette.background.paper,
-      height: "100vh",
-      width: "100%",
-      position: "relative", // the pinner should be relatively positioned as well
-      overflow: "hidden",
-    },
     offset: theme.mixins.toolbar, // f
   };
 });
