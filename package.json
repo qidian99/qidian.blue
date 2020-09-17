@@ -23,8 +23,10 @@
     "build/*"
   ],
   "devDependencies": {
+    "copy-webpack-plugin": "^6.1.0",
     "eslint": "^7.7.0",
     "eslint-config-synacor": "^3.0.5",
+    "file-loader": "^6.1.0",
     "imports-loader": "^0.8.0",
     "preact-cli": "^3.0.1",
     "preact-svg-loader": "^0.2.1",
@@ -50,6 +52,7 @@
     "react-gsap": "file:modules/react-gsap",
     "react-i18next": "^11.7.0",
     "react-intl": "^5.7.0",
+    "react-pdf": "^5.0.0",
     "react-router-dom": "^5.2.0",
     "react-scrollmagic": "^2.2.0",
     "react-transition-group": "^4.4.1",

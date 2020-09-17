@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 import path from 'path';
 import { lstatSync, readdirSync } from 'fs';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const gsapPath = "node_modules/gsap/src/uncompressed/";
 const scrollMagicPath = "node_modules/scrollmagic/scrollmagic/uncompressed/";
@@ -20,6 +21,16 @@ export default (config, env, helpers) => {
     test: /\.svg$/,
     use: ['preact-svg-loader'],
   })
+
+  config.module.rules.push({
+    // test: /\.(png|jpe?g|gif|pdf)$/i,
+    test: /\.(pdf)$/i,
+    use: [
+      {
+        loader: 'file-loader',
+      },
+    ],
+  });
 
   const aliases = config.resolve.alias;
   aliases.react = "preact/compat";
@@ -48,5 +59,13 @@ export default (config, env, helpers) => {
     jQuery: "jquery",
     $: "jquery",
     jquery: "jquery"
+  }));
+
+  // Support for non latin character
+  config.plugins.push(new CopyWebpackPlugin({
+    patterns: [{
+      from: path.resolve(__dirname, 'node_modules/pdfjs-dist/cmaps/'),
+      to: 'cmaps/'
+    }],
   }));
 }
