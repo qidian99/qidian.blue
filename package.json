@@ -1,8 +1,14 @@
 {
   "private": true,
   "name": "portfolio",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
+  "main": "dist/bundle.js",
+  "author": {
+    "name": "Dian Qi",
+    "email": "qidian990107@163.com",
+    "url": "https://qidian.blue"
+  },
   "scripts": {
     "build": "preact build",
     "serve": "preact serve",
