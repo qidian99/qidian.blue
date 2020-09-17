@@ -23,20 +23,29 @@ import '../router/i18n/localizations'
 import i18next from 'i18next';
 import common_enUS from '../translations/en-US/common.json';
 import common_zhCN from '../translations/zh-CN/common.json';
+import widget_zhCN from '../translations/zh-CN/widget.json';
+import widget_enUS from '../translations/en-US/widget.json';
+import router_zhCN from '../translations/zh-CN/router.json';
+import router_enUS from '../translations/en-US/router.json';
+
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 import "animation.gsap";
 import "debug.addIndicators";
 
 i18next.init({
-	interpolation: { escapeValue: false },  // React already does escaping
-	lng: defaultLanguage,                            // language to use
+	interpolation: { escapeValue: false },
+	lng: defaultLanguage,
 	resources: {
 		enUS: {
-			common: common_enUS                 // 'common' is our custom namespace
+			common: common_enUS,                // For all main texts
+			widget: widget_enUS,                // For text appeared in widgets such as buttons
+			router: router_enUS,
 		},
 		zhCN: {
-			common: common_zhCN
+			common: common_zhCN,
+			widget: widget_zhCN,
+			router: router_zhCN,
 		}
 	}
 });
@@ -101,6 +110,24 @@ const App = () => {
 									</Route>
 									<Route exact path={AppRoute.Resume}>
 										<views.Resume />
+									</Route>
+									<Route exact path={AppRoute.Work}>
+										<views.Work />
+									</Route>
+									<Route exact path="routes.ibm">
+										<views.IBM />
+									</Route>
+									<Route exact path="routes.its">
+										<views.ITS />
+									</Route>
+									<Route exact path="routes.isafe1">
+										<views.ISAFE1 />
+									</Route>
+									<Route exact path="routes.isafe2">
+										<views.ISAFE2 />
+									</Route
+									><Route exact path="routes.isafe3">
+										<views.ISAFE3 />
 									</Route>
 									<Route path="*">
 										<views.GeneralError />

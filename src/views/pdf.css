@@ -1,0 +1,21 @@
+.react-pdf__Page__textContent {
+  top: calc(50% - 33px) !important;
+}
+
+.react-pdf__Page__textContent span {
+  opacity: 0.3;
+}
+
+.react-pdf__Page__textContent span::selection {
+  background-color: blue;
+}
+
+.react-pdf__Document {
+  line-height: initial;
+}
+
+/*
+.react-pdf__Page.pdf-page {
+  display: flex;
+  justify-content: center;
+} */
