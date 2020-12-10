@@ -1,6 +1,6 @@
-.react-pdf__Page__textContent {
+/* .react-pdf__Page__textContent {
   top: calc(50% - 33px) !important;
-}
+} */
 
 .react-pdf__Page__textContent span {
   opacity: 0.3;

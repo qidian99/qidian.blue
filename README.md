@@ -1,8 +1,35 @@
-# preact material app
+# Dian's Portfolio
 
-Super performant `Material` app for preact world using [preact-material-components](https://github.com/prateekbh/preact-material-components)
+## Feature
 
-## CLI Commands
+* Multilingual support: English and Chinese. Easy to extend.
+
+* GSAP animations
+
+* Dark and light mode
+
+* AJAX router (SPA)
+
+* Custom timeline for demoing work experience
+
+* Global search (coming soon!)
+
+* Super performant `Material` app
+
+## Structure
+
+* `Home`: Self-introduction.
+* `Resume`: Resume.
+* `Projects`: Lab, team, and personal progress, WIP.
+* `Work Experience`: Work experience since college.
+
+## Design Practices
+
+All of the designs in this portfolio follow the practice of Material UI design.
+
+ALl of the components are created from SCRATCH.
+
+## Build Instructions
 
 ``` bash
 # install dependencies

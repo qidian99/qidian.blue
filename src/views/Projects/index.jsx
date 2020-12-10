@@ -158,7 +158,7 @@ const Projects = () => {
       <Grid container spacing={0} justify="center">
         {Array(10)
           .fill(0)
-          .map((_, i) => {
+          .map((_, i, arr) => {
             const index = i + 1;
             const title = t(`projects.${index}_title`);
             const body = t(`projects.${index}_body`);
@@ -168,7 +168,7 @@ const Projects = () => {
             const avatar = getProjectAvatar(index);
             return (
               <Grid container justify="center" item xs={12} sm={12}>
-                <Box width="100%" p={6} {...(i % 2 == 1 ? { style: { padding: 0 } } : {})} display="flex" justifyContent="center">
+                <Box width="100%" p={6} {...(i % 2 == 1 ? { style: { padding: 0, paddingBottom: (i === arr.length - 1) ? 48 : null } } : {})} display="flex" justifyContent="center">
                   <ProjectCard
                     avatar={avatar}
                     title={title}
